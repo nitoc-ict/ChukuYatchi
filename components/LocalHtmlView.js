@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react'
 import { WebView, Platform } from 'react-native'
 import { Asset } from 'expo-asset'
 
-const html = require('../assets/phina.html')
+// const html = require('../assets/phina.html')
 
 export default (props) => {
   const [file, setFile] = useState(null)
-  const fileName = props.fileName
+  // const fileName = props.fileName
+  const html = props.file
 
   const download = async () => {
     let file = Asset.fromModule(html)

@@ -3,12 +3,12 @@ import {WebView} from 'react-native-webview';
 import WebViewCanvas from './components/WebViewCanvas'
 import LocalHtmlView from './components/LocalHtmlView'
 
-const src = require('./phina.html')
+const src = require('./assets/phina.html')
 
 export default class App extends React.Component {
   render() {
     return (
-      <LocalHtmlView fileName={'phina.html'}/>
+      <LocalHtmlView file={src}/>
     );
   }
 }
