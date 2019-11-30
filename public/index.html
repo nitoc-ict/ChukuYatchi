@@ -149,9 +149,7 @@ phina.define("MainScene", {
       }
     }
 
-    for (i = 1; i < 100; i++) {
-      sleepLoop(10, 0);
-    }
+    sleepLoop(100, 0);
 
     this.uchiwa.tweener.fadeIn(2000).play();
   },
@@ -197,7 +195,7 @@ phina.main(function() {
     assets: ASSETS,       // アセット読み込み
   });
   app.enableStats();
-  // 実行
+ // 実行
   app.run();
 });
     </script>
