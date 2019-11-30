@@ -10,28 +10,36 @@
 
 phina.globalize();
 
-const HEIGHT = 960;  // 画面の縦幅
-const WIDTH = 640;   // 画面の横幅
+const HEIGHT = window.innerHeight * 1.77;  // 画面の縦幅
+const WIDTH = window.innerWidth * 1.77;   // 画面の横幅
 
 var ASSETS = {
   image: {
-    'iconMitsukeru': 'https://drive.google.com/uc?id=1FkQtvJNp60kb6r4GU0uezEMX6DZCGDqa',
-    'iconOshigoto': 'https://drive.google.com/uc?id=1NKrSV77pmY_y-orZjL9IrgYp58W4NdvA',
-    'iconBokin': 'https://drive.google.com/uc?id=1UYGej8SYAueHGJtazT6QdSTz0JUP2gf4',
+    'backgroundImage': 'https://drive.google.com/uc?id=1BmVfkIdbyOUWTfu5m_DR9Frh8KfHmFi8',
+    'iconMitsukeru': 'https://drive.google.com/uc?id=1c1FyBvCqQSAj6ag1NeP6DELeJoLWdyJl',
+    'iconOshigoto': 'https://drive.google.com/uc?id=1HqUEa06w89dhDEmX4jhGy4rJuV8A8r5k',
+    'iconBokin': 'https://drive.google.com/uc?id=1JKyjQRFaJGUq92kmw8DIo_OHk8mNdQbu',
   },
 };
 phina.define('MainScene', {
   superClass: 'CanvasScene',
   
   init: function() {
-    this.superInit();
+    this.superInit({
+      width: WIDTH,
+      height: HEIGHT,
+    });
 
     // 画像
+    this.backgroundImage = Sprite('backgroundImage', WIDTH, HEIGHT).addChildTo(this);
     this.iconOshigoto = Sprite('iconOshigoto').addChildTo(this);
     this.iconMitsukeru = Sprite('iconMitsukeru').addChildTo(this);
     this.iconBokin = Sprite('iconBokin').addChildTo(this);
     
     // 画像の配置
+    // 背景
+    this.backgroundImage.x = this.gridX.center();
+    this.backgroundImage.y = this.gridY.center();
     // みつけるアイコン
     this.iconMitsukeru.x = this.gridX.span(3);
     this.iconMitsukeru.y = this.gridY.span(15);
@@ -48,6 +56,7 @@ phina.define('MainScene', {
     var cnt = 0;
     var label = Label({x:320,y:600,fill:'black',text:cnt}).addChildTo(this);
     // タッチイベント登録
+    // おしごとアイコン
     this.iconOshigoto.onpointstart = function() {
       label.text = cnt++;
     };
