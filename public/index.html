@@ -23,84 +23,186 @@
     <div id="root"></div>
 
     <script>
-    var audioContext;
-var mediaStreamSource = null
-var meter = null
+      var audioContext;
+      var mediaStreamSource = null
+      var meter = null
+      var volume = null;
 
-function beginDetect() {
-  audioContext = new (window.AudioContext || window.webkitAudioContext)()
-  if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-    navigator.mediaDevices.getUserMedia({audio: true}).then((stream) => {
-      mediaStreamSource = audioContext.createMediaStreamSource(stream)
-      meter = createAudioMeter(audioContext)
-      mediaStreamSource.connect(meter)
-    })
-  }
-}
+      function beginDetect() {
+        audioContext = new (window.AudioContext || window.webkitAudioContext)()
+        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+          navigator.mediaDevices.getUserMedia({audio: true}).then((stream) => {
+            mediaStreamSource = audioContext.createMediaStreamSource(stream)
+            meter = createAudioMeter(audioContext)
+            mediaStreamSource.connect(meter)
+          })
+        }
+      }
 
-function createAudioMeter(audioContext, clipLevel, averaging, clipLag) {
-  const processor = audioContext.createScriptProcessor(512)
-  processor.onaudioprocess = volumeAudioProcess
-  processor.clipping = false
-  processor.lastClip = 0
-  processor.volume = 0
-  processor.clipLevel = clipLevel || 0.98
-  processor.averaging = averaging || 0.95
-  processor.clipLag = clipLag || 750
+      function createAudioMeter(audioContext, clipLevel, averaging, clipLag) {
+        const processor = audioContext.createScriptProcessor(512)
+        processor.onaudioprocess = volumeAudioProcess
+        processor.clipping = false
+        processor.lastClip = 0
+        processor.volume = 0
+        processor.clipLevel = clipLevel || 0.98
+        processor.averaging = averaging || 0.95
+        processor.clipLag = clipLag || 750
 
-  // this will have no effect, since we don't copy the input to the output,
-  // but works around a current Chrome bug.
-  processor.connect(audioContext.destination)
+        // this will have no effect, since we don't copy the input to the output,
+        // but works around a current Chrome bug.
+        processor.connect(audioContext.destination)
 
-  processor.checkClipping = function () {
-    if (!this.clipping) {
-      return false
+        processor.checkClipping = function () {
+          if (!this.clipping) {
+            return false
+          }
+          if ((this.lastClip + this.clipLag) < window.performance.now()) {
+            this.clipping = false
+          }
+          return this.clipping
+        }
+
+        processor.shutdown = function () {
+          this.disconnect()
+          this.onaudioprocess = null
+        }
+
+        return processor
+      }
+
+      function volumeAudioProcess(event) {
+        const buf = event.inputBuffer.getChannelData(0)
+        const bufLength = buf.length
+        let sum = 0
+        let x
+
+        // Do a root-mean-square on the samples: sum up the squares...
+        for (var i = 0; i < bufLength; i++) {
+          x = buf[i]
+          if (Math.abs(x) >= this.clipLevel) {
+              this.clipping = true
+              this.lastClip = window.performance.now()
+          }
+          sum += x * x
+        }
+
+        // ... then take the square root of the sum.
+        const rms = Math.sqrt(sum / bufLength)
+
+        // Now smooth this out with the averaging factor applied
+        // to the previous sample - take the max here because we
+        // want "fast attack, slow release."
+        this.volume = Math.max(rms, this.volume * this.averaging)
+        volume = this.volume;
+        document.getElementById('audio-value').innerHTML = this.volume
+      }
+
+      console.log(volume);
+      beginDetect();  // load時からvolumeを取る
+
+      phina.globalize();
+      // 定数
+const ASSETS = {
+  image: {
+    //https://drive.google.com/file/d/1xXLdSzMglC8iLn0moIzIZ-KH16GDNcfI/view?usp=sharing
+    //https://drive.google.com/file/d/1S4EcNFIzlEmLtqt8m4HZLKhNufULcd_9/view?usp=sharing
+    uchiwa: 'https://drive.google.com/uc?id=1xXLdSzMglC8iLn0moIzIZ-KH16GDNcfI',
+    uchiwa2: 'https://drive.google.com/uc?id=1S4EcNFIzlEmLtqt8m4HZLKhNufULcd_9'
+  },
+};
+// 画面の解像度
+const SCREEN_WIDTH  = window.parent.screen.width * 2;
+const SCREEN_HEIGHT = window.parent.screen.height * 2;
+// const SCREEN_WIDTH  = 1080;
+// const SCREEN_HEIGHT = 1920;
+// アプリ(ブラウザ)の表示領域サイズ 1.78 is magic number
+const WINDOW_WIDTH = window.innerWidth * 1.77;
+const WINDOW_HEIGHT = window.innerHeight * 1.77;
+// const SPEED         = 10;
+phina.define("MainScene", {
+  superClass: 'CanvasScene',
+  init: function(options) {
+    this.superInit(options);
+    var shape = Shape({
+      width: WINDOW_WIDTH,
+      height: WINDOW_HEIGHT,
+      backgroundColor: 'black'
+    }).setPosition(this.gridX.center(), this.gridY.center())
+      .addChildTo(this);
+    shape.tweener.fadeOut(2000).play()
+    this.uchiwa = Sprite('uchiwa', 128, 256).setPosition(this.gridX.center(), this.gridY.center()).addChildTo(this);
+    this.uchiwa2 = Sprite('uchiwa2', 128, 256).setPosition(this.gridX.center(), this.gridY.center()).addChildTo(this);
+    this.uchiwa2.hide();
+
+    ch = [this.uchiwa, this.uchiwa2]
+    function sleepLoop(maxCount, i) {
+      if (i <= maxCount) {
+        if (i % 2 == 0) {
+          ch[0].hide();
+          ch[1].show();
+        } else {
+          ch[0].show();
+          ch[1].hide();
+        }
+        setTimeout(function(){sleepLoop(maxCount, ++i)}, 1000);
+      }
     }
-    if ((this.lastClip + this.clipLag) < window.performance.now()) {
-      this.clipping = false
+
+    for (i = 1; i < 100; i++) {
+      sleepLoop(10, 0);
     }
-    return this.clipping
+
+    this.uchiwa.tweener.fadeIn(2000).play();
+  },
+  update: function() {
   }
-
-  processor.shutdown = function () {
-    this.disconnect()
-    this.onaudioprocess = null
-  }
-
-  return processor
-}
-
-function volumeAudioProcess(event) {
-  const buf = event.inputBuffer.getChannelData(0)
-  const bufLength = buf.length
-  let sum = 0
-  let x
-
-  // Do a root-mean-square on the samples: sum up the squares...
-  for (var i = 0; i < bufLength; i++) {
-    x = buf[i]
-    if (Math.abs(x) >= this.clipLevel) {
-        this.clipping = true
-        this.lastClip = window.performance.now()
-    }
-    sum += x * x
-  }
-
-  // ... then take the square root of the sum.
-  const rms = Math.sqrt(sum / bufLength)
-
-  // Now smooth this out with the averaging factor applied
-  // to the previous sample - take the max here because we
-  // want "fast attack, slow release."
-  this.volume = Math.max(rms, this.volume * this.averaging)
-  document.getElementById('audio-value').innerHTML = this.volume
-}
+  // // 更新
+  // update: function(app) {
+  //   var p = app.pointer;
+  //   if (p.getPointing()) {
+  //     var diff = this.player.x - p.x;
+  //     if (Math.abs(diff) > SPEED) {
+  //       // 右に移動
+  //       if (diff < 0) {
+  //         this.player.x += SPEED;
+  //         this.player.scaleX = -1;
+  //       }
+  //       // 左に移動
+  //       else {
+  //         this.player.x -= SPEED;
+  //         this.player.scaleX = 1;
+  //       }
+  //       // フレームアニメーション
+  //       if (app.frame % 4 === 0) {
+  //         this.player.frameIndex = (this.player.frameIndex === 12) ? 13:12;
+  //       }
+  //     }
+  //   }
+  //   else {
+  //     // 待機
+  //     this.player.frameIndex = 0;
+  //   }
+  // }
+});
+/*
+ * メイン処理
+ */
+phina.main(function() {
+  // アプリケーションを生成
+  var app = GameApp({
+    startLabel: 'main',   // MainScene から開始
+  //   width: SCREEN_WIDTH,  // 画面幅
+  //   height: SCREEN_HEIGHT,// 画面高さ
+    assets: ASSETS,       // アセット読み込み
+  });
+  app.enableStats();
+  // 実行
+  app.run();
+});
     </script>
     <div class="container">
-  <button onclick="beginDetect()">开始检测</button>
-  <p>音量值：<span id="audio-value">null</span></p>
-</div>
-
-
+      <p>音量：<span id="audio-value">null</span></p>
+    </div>
   </body>
 </html>
