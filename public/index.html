@@ -154,18 +154,17 @@
             this.uchiwa2.hide();
           }
 
-          ch = [this.fire1, this.fire2];
           // かまどの切り替え
           if (0.5 < volume) {
             ch = [this.fire3, this.fire4];
             ch[+ switchChar].hide();
             ch[+ !switchChar].show();
             gameScore += 1;
-          } else {
-            ch = [this.fire1, this.fire2];
-            ch[+ switchChar].hide();
-            ch[+ !switchChar].show();
           }
+        
+          ch = [this.fire1, this.fire2];
+          ch[+ switchChar].hide();
+          ch[+ !switchChar].show();
 //          ch[+ switchChar].hide();
 //          ch[+ !switchChar].show();
 
