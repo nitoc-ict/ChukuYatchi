@@ -19,6 +19,12 @@ var TILE_MARGIN = 8;
 var KAWARA_INIT_Y = 700;
 var KAWARA_INIT_X = 325;
 
+var ASSETS = {
+  image: {
+    dlang: "https://drive.google.com/uc?id=1EJ6i2fMe5JGL-k_RyaL2eQXLVehyKbPw",
+  },
+};
+
 
 phina.define("MainScene", {
     superClass: "DisplayScene",
@@ -83,11 +89,14 @@ phina.define("MainScene", {
         }
 
         let i = 0;
-        this.roof.children.each(function(tile) {
-          let x = i % MAX_ROOF_WIDTH;
-          tile.x = x * (TILE_WIDTH + TILE_MARGIN) + dx * 4;
-          ++i;
-        });
+
+        if (!this.kawara.throwed) {
+          this.roof.children.each(function(tile) {
+            let x = i % MAX_ROOF_WIDTH;
+            tile.x = x * (TILE_WIDTH + TILE_MARGIN) + dx * 4;
+            ++i;
+          });
+        }
       });
     },
 
@@ -97,6 +106,7 @@ phina.define("MainScene", {
       this.roof.children.each(function(tile) {
         if (!tile.hitted && tile.hitTestElement(kawara)) {
           tile.fill = 'red';
+          this.hit_kawara_num = 0;
           tile.hitted = true;
           kawara.hit();
         }
@@ -121,17 +131,12 @@ phina.define('Tile', {
 });
 
 phina.define('Kawara', {
-  superClass: 'RectangleShape',
-
+  //superClass: 'RectangleShape',
+  superClass: 'Sprite',
   init: function() {
-    this.superInit({
-      width: 80,
-      height: 50,
-      x: KAWARA_INIT_X,
-      y: KAWARA_INIT_Y,
-      fill: "gray",
-      stroke: null,
-    });
+    this.superInit('dlang');
+    this.x = KAWARA_INIT_X;
+    this.y = KAWARA_INIT_Y;
     this.physical.friction = 0.98;
     this.physical.force(0, 0);
     this.throwed = false;
@@ -152,6 +157,7 @@ phina.define('GameState', {
   init: function(kawara_num, put_kawara) {
     this.kawara_num = kawara_num;
     this.put_kawara = put_kawara;
+    this.hit_kawara_num = 0;
   },
 });
 
@@ -160,6 +166,7 @@ phina.main(function() {
   // アプリケーション生成
   var app = GameApp({
     startLabel: 'main', // メインシーンから開始する
+    assets: ASSETS,
   });
   // アプリケーション実行
   app.run();
