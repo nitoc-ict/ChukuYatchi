@@ -28,6 +28,14 @@ phina.define("MainScene", {
   init: function(options) {
     this.superInit(options);
 
+    var shape = Shape({
+      width: WINDOW_WIDTH,
+      height: WINDOW_HEIGHT,
+      backgroundColor: 'black'
+    }).setPosition(this.gridX.center(), this.gridY.center())
+      .addChildTo(this);
+    shape.tweener.fadeOut(2000).play()
+
     // 縦の4等分
     for (let i = 0; i < 5; i++) {
       var shape = Shape({
@@ -61,8 +69,11 @@ phina.define("MainScene", {
     }).setPosition(300, 300).addChildTo(this);
 
     this.dragon = Sprite('dragon', 128, 256).addChildTo(this);
+    this.dragon.tweener.wait(300);
     this.dragon.setPosition(600, 800);
     this.dragon.setRotation(0);
+    this.dragon.alpha = 0;
+    this.dragon.tweener.fadeIn(2000).play();
     // this.dragon.frameIndex = 0;
 
     this.dragon.tweener
