@@ -26,9 +26,18 @@
       var voice = new Pizzicato.Sound({
         source: 'input',
         options: {
-          volume: 0.8,
+          volume: 1,
         }
         });
+      document.body.onload = addElement;
+
+      function addElement () { 
+        var newDiv = document.createElement("div"); 
+        var newContent = document.createTextNode(voice.volume); 
+        newDiv.appendChild(newContent);  
+        var currentDiv = document.getElementById("root"); 
+        document.body.insertBefore(newDiv, currentDiv); 
+      }
     </script>
 
   </body>
