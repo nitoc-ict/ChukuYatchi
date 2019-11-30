@@ -23,7 +23,12 @@
     <div id="root"></div>
 
     <script>
-      var voice = new Pizzicato.Sound({ source: 'input' });
+      var voice = new Pizzicato.Sound({
+        source: 'input',
+        options: {
+          volume: 0.8,
+        }
+        });
     </script>
 
   </body>
