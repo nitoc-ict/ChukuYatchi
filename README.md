@@ -1,3 +1,7 @@
+## ChukuYatchi
+[![Netlify Status](https://api.netlify.com/api/v1/badges/42b7d3cd-e42e-4e1d-917a-de4fcdae1e48/deploy-status)](https://app.netlify.com/sites/infallible-mahavira-e3b76b/deploys)
+---
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
