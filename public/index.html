@@ -27,6 +27,7 @@
       var mediaStreamSource = null
       var meter = null
       var volume = null;
+      var gameScore = 0;
 
       function beginDetect() {
         audioContext = new (window.AudioContext || window.webkitAudioContext)()
@@ -103,98 +104,85 @@
 
       phina.globalize();
       // 定数
-const ASSETS = {
-  image: {
-    //https://drive.google.com/file/d/1xXLdSzMglC8iLn0moIzIZ-KH16GDNcfI/view?usp=sharing
-    //https://drive.google.com/file/d/1S4EcNFIzlEmLtqt8m4HZLKhNufULcd_9/view?usp=sharing
-    uchiwa: 'https://drive.google.com/uc?id=1xXLdSzMglC8iLn0moIzIZ-KH16GDNcfI',
-    uchiwa2: 'https://drive.google.com/uc?id=1S4EcNFIzlEmLtqt8m4HZLKhNufULcd_9'
-  },
-};
-// 画面の解像度
-const SCREEN_WIDTH  = window.parent.screen.width * 2;
-const SCREEN_HEIGHT = window.parent.screen.height * 2;
-// const SCREEN_WIDTH  = 1080;
-// const SCREEN_HEIGHT = 1920;
-// アプリ(ブラウザ)の表示領域サイズ 1.78 is magic number
-const WINDOW_WIDTH = window.innerWidth * 1.77;
-const WINDOW_HEIGHT = window.innerHeight * 1.77;
-var switchChar = true;
-// const SPEED         = 10;
-phina.define("MainScene", {
-  superClass: 'CanvasScene',
-  init: function(options) {
-    this.superInit(options);
-    var shape = Shape({
-      width: WINDOW_WIDTH,
-      height: WINDOW_HEIGHT,
-      backgroundColor: 'black'
-    }).setPosition(this.gridX.center(), this.gridY.center())
-      .addChildTo(this);
-    shape.tweener.fadeOut(2000).play()
-    this.uchiwa = Sprite('uchiwa', 128, 256).setPosition(this.gridX.center(), this.gridY.center()).addChildTo(this);
-    this.uchiwa2 = Sprite('uchiwa2', 128, 256).setPosition(this.gridX.center(), this.gridY.center()).addChildTo(this);
+      const ASSETS = {
+        image: {
+          uchiwa: 'https://drive.google.com/uc?id=1xXLdSzMglC8iLn0moIzIZ-KH16GDNcfI',
+          uchiwa2: 'https://drive.google.com/uc?id=1S4EcNFIzlEmLtqt8m4HZLKhNufULcd_9',
+          kamado: 'https://drive.google.com/uc?id=1JFX4Im7h_gyubtJR3BReKeEawmbWHl0A',
+          fire1: 'https://drive.google.com/uc?id=1NehPRUijw0gZ9J4QLh6VRl73YIrrxQBs',
+          fire2: 'https://drive.google.com/uc?id=1keye0H-z1pgZGpnH629B0JUYg-yQwbzb',
+          fire3: 'https://drive.google.com/uc?id=1QLQGhZd_LmhS7Um7543OPSIesMVdd0_F',
+          fire4: 'https://drive.google.com/uc?id=1Xttjt0A0PKuGec9_Q1ow9_DIQ7kE1x8t'
+        },
+      };
+      // 画面の解像度
+      const SCREEN_WIDTH  = window.parent.screen.width * 2;
+      const SCREEN_HEIGHT = window.parent.screen.height * 2;
+      // const SCREEN_WIDTH  = 1080;
+      // const SCREEN_HEIGHT = 1920;
+      // アプリ(ブラウザ)の表示領域サイズ 1.78 is magic number
+      const WINDOW_WIDTH = window.innerWidth * 1.77;
+      const WINDOW_HEIGHT = window.innerHeight * 1.77;
+      var switchChar = true;
+      // const SPEED         = 10;
+      phina.define("MainScene", {
+        superClass: 'CanvasScene',
+        init: function(options) {
+          this.superInit(options);
+          this.background = Sprite('kamado', 375, 812).setPosition(this.gridX.center(), this.gridY.center()).addChildTo(this);
+          this.uchiwa = Sprite('uchiwa', 128, 256).setPosition(this.gridX.center(), this.gridY.center()).addChildTo(this);
+          this.uchiwa2 = Sprite('uchiwa2', 128, 256).setPosition(this.gridX.center(), this.gridY.center()).addChildTo(this);
 
-//    this.uchiwa.update = function () {
-//      this.rotation -= 10;
-//    }
+          this.fire1 = Sprite('fire1', 128, 256).setPosition(this.gridX.center(), this.gridY.center()).addChildTo(this);
+          this.fire2 = Sprite('fire2', 128, 256).setPosition(this.gridX.center(), this.gridY.center()).addChildTo(this).hide();
+          this.fire3 = Sprite('fire3', 128, 256).setPosition(this.gridX.center(), this.gridY.center()).addChildTo(this).hide();
+          this.fire4 = Sprite('fire4', 128, 256).setPosition(this.gridX.center(), this.gridY.center()).addChildTo(this).hide();
 
-    this.uchiwa.tweener.fadeIn(2000).play();
-  },
-  update: function() {
-    switchChar = !switchChar
+      //    this.uchiwa.update = function () {
+      //      this.rotation -= 10;
+      //    }
 
-    if (switchChar) {
-      this.uchiwa.hide();
-      this.uchiwa2.show();
-    } else {
-      this.uchiwa.show();
-      this.uchiwa2.hide();
-    }
-  }
-  // // 更新
-  // update: function(app) {
-  //   var p = app.pointer;
-  //   if (p.getPointing()) {
-  //     var diff = this.player.x - p.x;
-  //     if (Math.abs(diff) > SPEED) {
-  //       // 右に移動
-  //       if (diff < 0) {
-  //         this.player.x += SPEED;
-  //         this.player.scaleX = -1;
-  //       }
-  //       // 左に移動
-  //       else {
-  //         this.player.x -= SPEED;
-  //         this.player.scaleX = 1;
-  //       }
-  //       // フレームアニメーション
-  //       if (app.frame % 4 === 0) {
-  //         this.player.frameIndex = (this.player.frameIndex === 12) ? 13:12;
-  //       }
-  //     }
-  //   }
-  //   else {
-  //     // 待機
-  //     this.player.frameIndex = 0;
-  //   }
-  // }
-});
-/*
- * メイン処理
- */
-phina.main(function() {
-  // アプリケーションを生成
-  var app = GameApp({
-    startLabel: 'main',   // MainScene から開始
-  //   width: SCREEN_WIDTH,  // 画面幅
-  //   height: SCREEN_HEIGHT,// 画面高さ
-    assets: ASSETS,       // アセット読み込み
-  });
-  app.enableStats();
- // 実行
-  app.run();
-});
+          this.background.tweener.fadeIn(2000).play();
+          this.uchiwa.tweener.fadeIn(2000).play();
+        },
+        update: function() {
+          // うちわの切り替え
+          switchChar = !switchChar
+          if (switchChar) {
+            this.uchiwa.hide();
+            this.uchiwa2.show();
+          } else {
+            this.uchiwa.show();
+            this.uchiwa2.hide();
+          }
+
+          ch = [this.fire1, this.fire2];
+          // かまどの切り替え
+          if (0.4 < volume) {
+            ch = [this.fire3, this.fire4];
+          } else {
+            ch = [this.fire1, this.fire2];
+          }
+          ch[+ switchChar].hide();
+          ch[+ !switchChar].show();
+
+        }
+      });
+      /*
+       * メイン処理
+       */
+      phina.main(function() {
+        // アプリケーションを生成
+        var app = GameApp({
+          startLabel: 'main',   // MainScene から開始
+        //   width: SCREEN_WIDTH,  // 画面幅
+        //   height: SCREEN_HEIGHT,// 画面高さ
+          assets: ASSETS,       // アセット読み込み
+        });
+        app.enableStats();
+       // 実行
+        app.run();
+      });
     </script>
     <div class="container">
       <p>音量：<span id="audio-value">null</span></p>
