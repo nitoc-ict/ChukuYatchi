@@ -1,12 +1,55 @@
-<meta name="viewport" content="width=device-width, user-scalable=no" />
-<meta name="apple-mobile-web-app-capable" content="yes" />
-<script src='http://cdn.rawgit.com/phi-jp/phina.js/v0.2.0/build/phina.js'></script>
+<!DOCTYPE html>
+
+  <title>ChukuYatchi</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, user-scalable=no" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <script src="http://cdn.rawgit.com/phi-jp/phina.js/v0.2.0/build/phina.js"></script>
+
 <script>
-/*
- *
- * Runstant
- * 思いたったらすぐ開発. プログラミングに革命を...
- */
+
 phina.globalize();
 
+const HEIGHT = 960;  // 画面の縦幅
+const WIDTH = 640;   // 画面の横幅
+
+var ASSETS = {
+  image: {
+    'oshigoto': 'https://drive.google.com/uc?id=1EJ6i2fMe5JGL-k_RyaL2eQXLVehyKbPw',
+  },
+};
+phina.define('MainScene', {
+  superClass: 'CanvasScene',
+  
+  init: function() {
+    this.superInit();
+    // this.backgroundColor = "#000000";
+
+    this.oshigoto = Sprite('oshigoto').addChildTo(this);
+    
+    this.oshigoto.x = this.gridX.center();
+    this.oshigoto.y = this.gridY.span(14);
+    
+    // タッチを有効にする
+    this.oshigoto.setInteractive(true);
+    
+    var cnt = 0;
+    var label = Label({x:320,y:600,fill:'black',text:cnt}).addChildTo(this);
+    // タッチイベント登録
+    this.oshigoto.onpointstart = function() {
+      label.text = cnt++;
+    };
+  },
+});
+
+phina.main(function() {
+  var app = GameApp({
+    startLabel: 'main',
+    assets: ASSETS,
+    height: HEIGHT,
+    width: WIDTH,
+  });
+  
+  app.run();
+});
 </script>
