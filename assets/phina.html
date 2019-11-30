@@ -11,73 +11,66 @@ phina.globalize();
  * メインシーン
  */
 
-var MAX_ROOF_WIDTH = 10;
+var MAX_ROOF_WIDTH = 4;
 var MAX_ROOF_HEIGHT = 3;
 var TILE_WIDTH = 80;
 var TILE_HEIGHT = 50;
 var TILE_MARGIN = 8;
+var KAWARA_INIT_Y = 700;
+var KAWARA_INIT_X = 325;
+
 
 phina.define("MainScene", {
     superClass: "DisplayScene",
     init: function () {
       this.superInit();
 
-
       // プレイヤー
-      this.player = RectangleShape({
-          width: 100,
-          height: 100,
-          fill: "gray",
-          stroke: null
-      }).addChildTo(this).setPosition(this.gridX.center(), this.gridY.center());
-      this.flick = this.player.flickable;
-      this.flick.horizontal = false;
+      this.kawara = Kawara().addChildTo(this);
+      this.game_state = GameState(10, [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0]);
 
       this.roof = DisplayElement().addChildTo(this);
       (MAX_ROOF_HEIGHT * MAX_ROOF_WIDTH).times(function(i) {
         let x = i % MAX_ROOF_WIDTH;
         let y = Math.floor(i / MAX_ROOF_WIDTH);
         let tile = Tile().addChildTo(this.roof).setPosition(x * (TILE_WIDTH + TILE_MARGIN), 100 + y * (TILE_HEIGHT + TILE_MARGIN));
+        tile.hitted = this.game_state.put_kawara[i];
+        if (tile.hitted) {
+          tile.fill = 'red';
+        }
       }, this);
 
-      this.label = Label(this.roof.children.length).addChildTo(this);
 
-      this.label.x = 320;
-      this.label.y = 480;
+      this.label = Label('のこり\n' + this.game_state.kawara_num + 'コ').addChildTo(this);
+
+      this.label.x = 540;
+      this.label.y = 700;
       this.label.fontSize = 42;
-
-      this.roof.update = function(app) {
-        var accel = app.accelerometer;
-        // 重力情報
-        var gravity = accel.gravity;
-        var ori = accel.orientation;
-        var rotate = accel.rotation;
-      }
 
     },
     // 更新
     update: function (app) {
-      if (this.player.y <= -10) {
-          this.player.y = 960;
-      } else if (this.player.y >= 970) {
-          this.player.y = 0;
-      }
-
-      // フリックの強さ
-      const len = Math.floor(this.flick.velocity.y);
-
-      if (len > 20 || len < -20) {
-          // フリックの方向
-          const deg = (len < 0) ? 90 : 270;
+      if (this.kawara.y <= 0 || this.kawara.y >= 970) {
+        this.kawara.hit();
       }
 
       this.checkHit();
 
-      var accel = app.accelerometer;
       // 重力情報
+      var accel = app.accelerometer;
+      var ac = accel.acceleration;
       var gravity = accel.gravity;
       var ori = accel.orientation;
       var rotate = accel.rotation;
+      this.label.text = 'のこり\n' + this.game_state.kawara_num + 'コ';
+
+      if (!this.kawara.throwed && this.kawara.isThrow(ac.y)) {
+        this.kawara.physical.force(0, ac.y);
+        this.game_state.kawara_num--;
+        this.kawara.throwed = true;
+      }
+
+
       window.addEventListener('deviceorientation', (dat) => {
         alpha = dat.alpha;
 
@@ -99,13 +92,13 @@ phina.define("MainScene", {
     },
 
     checkHit: function() {
-      var player = this.player;
+      var kawara = this.kawara;
+      var gridX = this.gridX;
       this.roof.children.each(function(tile) {
-        if (tile.hitTestElement(player)) {
+        if (!tile.hitted && tile.hitTestElement(kawara)) {
           tile.fill = 'red';
-        }
-        else {
-          tile.fill = 'blue';
+          tile.hitted = true;
+          kawara.hit();
         }
       });
     },
@@ -123,7 +116,43 @@ phina.define('Tile', {
       fill: 'blue',
       cornerRadius: 4,
     });
+    this.hitted = false;
   }
+});
+
+phina.define('Kawara', {
+  superClass: 'RectangleShape',
+
+  init: function() {
+    this.superInit({
+      width: 80,
+      height: 50,
+      x: KAWARA_INIT_X,
+      y: KAWARA_INIT_Y,
+      fill: "gray",
+      stroke: null,
+    });
+    this.physical.friction = 0.98;
+    this.physical.force(0, 0);
+    this.throwed = false;
+  },
+
+  hit: function() {
+    this.y = KAWARA_INIT_Y;
+    this.physical.force(0, 0);
+    this.throwed = false;
+  },
+
+  isThrow: function(h) {
+    return h < -20;
+  }
+});
+
+phina.define('GameState', {
+  init: function(kawara_num, put_kawara) {
+    this.kawara_num = kawara_num;
+    this.put_kawara = put_kawara;
+  },
 });
 
 // メイン処理
