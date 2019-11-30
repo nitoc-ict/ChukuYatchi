@@ -119,6 +119,7 @@ const SCREEN_HEIGHT = window.parent.screen.height * 2;
 // アプリ(ブラウザ)の表示領域サイズ 1.78 is magic number
 const WINDOW_WIDTH = window.innerWidth * 1.77;
 const WINDOW_HEIGHT = window.innerHeight * 1.77;
+var switchChar = true;
 // const SPEED         = 10;
 phina.define("MainScene", {
   superClass: 'CanvasScene',
@@ -131,15 +132,25 @@ phina.define("MainScene", {
     }).setPosition(this.gridX.center(), this.gridY.center())
       .addChildTo(this);
     shape.tweener.fadeOut(2000).play()
-    this.uchiwa = Sprite('uchiwa2', 128, 256).setPosition(this.gridX.center(), this.gridY.center()).addChildTo(this);
+    this.uchiwa = Sprite('uchiwa', 128, 256).setPosition(this.gridX.center(), this.gridY.center()).addChildTo(this);
+    this.uchiwa2 = Sprite('uchiwa2', 128, 256).setPosition(this.gridX.center(), this.gridY.center()).addChildTo(this);
 
-    this.uchiwa.update = function () {
-      this.rotation -= 10;
-    }
+//    this.uchiwa.update = function () {
+//      this.rotation -= 10;
+//    }
 
     this.uchiwa.tweener.fadeIn(2000).play();
   },
   update: function() {
+    switchChar = !switchChar
+
+    if (switchChar) {
+      this.uchiwa.hide();
+      this.uchiwa2.show();
+    } else {
+      this.uchiwa.show();
+      this.uchiwa2.hide();
+    }
   }
   // // 更新
   // update: function(app) {
