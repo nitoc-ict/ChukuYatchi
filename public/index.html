@@ -3,41 +3,110 @@
   <head>
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<script src='http://cdn.rawgit.com/phi-jp/phina.js/v0.2.0/build/phina.js'></script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="theme-color" content="#000000" />
     <meta
       name="description"
       content="Web site created using create-react-app"
     />
     <link rel="apple-touch-icon" href="logo192.png" />
-    <!--
-      manifest.json provides metadata used when your web app is installed on a
-      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
-    -->
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <!--
-      Notice the use of %PUBLIC_URL% in the tags above.
-      It will be replaced with the URL of the `public` folder during the build.
-      Only files inside the `public` folder can be referenced from the HTML.
-
-      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-      work correctly both with client-side routing and a non-root public URL.
-      Learn how to configure a non-root public URL by running `npm run build`.
-    -->
-    <title>React App</title>
+    <title>ChukuYatchi</title>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
 
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
+    <script>
+    phina.globalize();
+// 定数
+var ASSETS = {
+  image: {
+    dragon: 'https://drive.google.com/uc?id=1EJ6i2fMe5JGL-k_RyaL2eQXLVehyKbPw'
+  },
+};
+// var SCREEN_WIDTH  = 465;              // スクリーン幅
+// var SCREEN_HEIGHT = 465;              // スクリーン高さ
+var SPEED         = 10;
+phina.define("MainScene", {
+  superClass: 'DisplayScene',
+  init: function(options) {
+    this.superInit(options);
+    this.dragon = Sprite('dragon', 128, 256).addChildTo(this);
+    this.dragon.setPosition(600, 800);
+    this.dragon.setRotation(0);
+    // this.dragon.frameIndex = 0;
+    this.dragon.tweener
+      .to({
+        x: 400,
+        y: 500,
+        rotation: -30
+      }, 3000, "easeOutQuad");
+      // .wait(600)
+    // for (var i = 0; i < 3; i++) {
+      this.dragon.tweener
+        .by({
+          x: -2,
+          y: -10,
+          rotation: -10,
+        }, 1000, "easeOutQuad")
+        // .wait(800)
+        .by({
+          x: +2,
+          y: +10,
+          rotation: +10,
+        }, 1000, "easeOutQuad").setLoop(true);
+    // }
+  },
+  update: function() {
+  }
+  // // 更新
+  // update: function(app) {
+  //   var p = app.pointer;
+  //   if (p.getPointing()) {
+  //     var diff = this.player.x - p.x;
+  //     if (Math.abs(diff) > SPEED) {
+  //       // 右に移動
+  //       if (diff < 0) {
+  //         this.player.x += SPEED;
+  //         this.player.scaleX = -1;
+  //       }
+  //       // 左に移動
+  //       else {
+  //         this.player.x -= SPEED;
+  //         this.player.scaleX = 1;
+  //       }
+  //       // フレームアニメーション
+  //       if (app.frame % 4 === 0) {
+  //         this.player.frameIndex = (this.player.frameIndex === 12) ? 13:12;
+  //       }
+  //     }
+  //   }
+  //   else {
+  //     // 待機
+  //     this.player.frameIndex = 0;
+  //   }
+  // }
+});
+/*
+ * メイン処理
+ */
+phina.main(function() {
+  // アプリケーションを生成
+  var app = GameApp({
+    startLabel: 'main',   // MainScene から開始
+  //   width: SCREEN_WIDTH,  // 画面幅
+  //   height: SCREEN_HEIGHT,// 画面高さ
+    assets: ASSETS,       // アセット読み込み
+  });
+  app.enableStats();
+  // 実行
+  app.run();
+});
+    </script>
 
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
   </body>
 </html>
