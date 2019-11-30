@@ -131,25 +131,11 @@ phina.define("MainScene", {
     }).setPosition(this.gridX.center(), this.gridY.center())
       .addChildTo(this);
     shape.tweener.fadeOut(2000).play()
-    this.uchiwa = Sprite('uchiwa', 128, 256).setPosition(this.gridX.center(), this.gridY.center()).addChildTo(this);
-    this.uchiwa2 = Sprite('uchiwa2', 128, 256).setPosition(this.gridX.center(), this.gridY.center()).addChildTo(this);
-    this.uchiwa2.hide();
+    this.uchiwa = Sprite('uchiwa2', 128, 256).setPosition(this.gridX.center(), this.gridY.center()).addChildTo(this);
 
-    ch = [this.uchiwa, this.uchiwa2]
-    function sleepLoop(maxCount, i) {
-      if (i <= maxCount) {
-        if (i % 2 == 0) {
-          ch[0].hide();
-          ch[1].show();
-        } else {
-          ch[0].show();
-          ch[1].hide();
-        }
-        setTimeout(function(){sleepLoop(maxCount, ++i)}, 1000);
-      }
+    this.uchiwa.update = function () {
+      this.rotation -= 10;
     }
-
-    sleepLoop(100, 0);
 
     this.uchiwa.tweener.fadeIn(2000).play();
   },
