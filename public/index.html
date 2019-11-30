@@ -96,7 +96,7 @@
         // want "fast attack, slow release."
         this.volume = Math.max(rms, this.volume * this.averaging)
         volume = this.volume;
-        document.getElementById('audio-value').innerHTML = this.volume
+        document.getElementById('audio-value').innerHTML = volume
         document.getElementById('score-value').innerHTML = gameScore
       }
 
@@ -131,20 +131,17 @@
         init: function(options) {
           this.superInit(options);
           this.background = Sprite('kamado', 375, 812).setPosition(this.gridX.center(), this.gridY.center()).addChildTo(this);
-          this.uchiwa = Sprite('uchiwa', 128, 256).setPosition(this.gridX.center(), this.gridY.center()).addChildTo(this);
-          this.uchiwa2 = Sprite('uchiwa2', 128, 256).setPosition(this.gridX.center(), this.gridY.center()).addChildTo(this);
 
           this.fire1 = Sprite('fire1', 128, 256).setPosition(this.gridX.center(), this.gridY.center()).addChildTo(this);
           this.fire2 = Sprite('fire2', 128, 256).setPosition(this.gridX.center(), this.gridY.center()).addChildTo(this).hide();
           this.fire3 = Sprite('fire3', 128, 256).setPosition(this.gridX.center(), this.gridY.center()).addChildTo(this).hide();
           this.fire4 = Sprite('fire4', 128, 256).setPosition(this.gridX.center(), this.gridY.center()).addChildTo(this).hide();
 
-      //    this.uchiwa.update = function () {
-      //      this.rotation -= 10;
-      //    }
+          this.uchiwa = Sprite('uchiwa', 128, 256).setPosition(this.gridX.center()+120, this.gridY.center()+150).addChildTo(this);
+          this.uchiwa2 = Sprite('uchiwa2', 128, 256).setPosition(this.gridX.center()+120, this.gridY.center()+150).addChildTo(this);
 
-          this.background.tweener.fadeIn(2000).play();
-          this.uchiwa.tweener.fadeIn(2000).play();
+          //this.background.tweener.fadeIn(2000).play();
+          //this.uchiwa.tweener.fadeIn(2000).play();
         },
         update: function() {
           // うちわの切り替え
