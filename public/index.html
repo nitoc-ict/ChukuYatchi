@@ -97,6 +97,7 @@
         this.volume = Math.max(rms, this.volume * this.averaging)
         volume = this.volume;
         document.getElementById('audio-value').innerHTML = this.volume
+        document.getElementById('score-value').innerHTML = gameScore
       }
 
       console.log(volume);
@@ -158,8 +159,9 @@
 
           ch = [this.fire1, this.fire2];
           // かまどの切り替え
-          if (0.4 < volume) {
+          if (0.5 < volume) {
             ch = [this.fire3, this.fire4];
+            gameScore += 1;
           } else {
             ch = [this.fire1, this.fire2];
           }
@@ -186,6 +188,7 @@
     </script>
     <div class="container">
       <p>音量：<span id="audio-value">null</span></p>
+      <p>SCORE：<span id="score-value">null</span></p>
     </div>
   </body>
 </html>
