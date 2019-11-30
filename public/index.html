@@ -13,6 +13,7 @@
     />
     <link rel="apple-touch-icon" href="logo192.png" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pizzicato/0.6.4/Pizzicato.min.js"></script>
     <script type="text/javascript" src='http://cdn.rawgit.com/phi-jp/phina.js/v0.2.0/build/phina.js'></script>
     <title>ChukuYatchi</title>
   </head>
@@ -21,91 +22,7 @@
     <div id="root"></div>
 
     <script>
-    phina.globalize();
-// 定数
-var ASSETS = {
-  image: {
-    dragon: 'https://drive.google.com/uc?id=1EJ6i2fMe5JGL-k_RyaL2eQXLVehyKbPw'
-  },
-};
-// var SCREEN_WIDTH  = 465;              // スクリーン幅
-// var SCREEN_HEIGHT = 465;              // スクリーン高さ
-var SPEED         = 10;
-phina.define("MainScene", {
-  superClass: 'DisplayScene',
-  init: function(options) {
-    this.superInit(options);
-    this.dragon = Sprite('dragon', 128, 256).addChildTo(this);
-    this.dragon.setPosition(600, 800);
-    this.dragon.setRotation(0);
-    // this.dragon.frameIndex = 0;
-    this.dragon.tweener
-      .to({
-        x: 400,
-        y: 500,
-        rotation: -30
-      }, 3000, "easeOutQuad");
-      // .wait(600)
-    // for (var i = 0; i < 3; i++) {
-      this.dragon.tweener
-        .by({
-          x: -2,
-          y: -10,
-          rotation: -10,
-        }, 1000, "easeOutQuad")
-        // .wait(800)
-        .by({
-          x: +2,
-          y: +10,
-          rotation: +10,
-        }, 1000, "easeOutQuad").setLoop(true);
-    // }
-  },
-  update: function() {
-  }
-  // // 更新
-  // update: function(app) {
-  //   var p = app.pointer;
-  //   if (p.getPointing()) {
-  //     var diff = this.player.x - p.x;
-  //     if (Math.abs(diff) > SPEED) {
-  //       // 右に移動
-  //       if (diff < 0) {
-  //         this.player.x += SPEED;
-  //         this.player.scaleX = -1;
-  //       }
-  //       // 左に移動
-  //       else {
-  //         this.player.x -= SPEED;
-  //         this.player.scaleX = 1;
-  //       }
-  //       // フレームアニメーション
-  //       if (app.frame % 4 === 0) {
-  //         this.player.frameIndex = (this.player.frameIndex === 12) ? 13:12;
-  //       }
-  //     }
-  //   }
-  //   else {
-  //     // 待機
-  //     this.player.frameIndex = 0;
-  //   }
-  // }
-});
-/*
- * メイン処理
- */
-phina.main(function() {
-  // アプリケーションを生成
-  var app = GameApp({
-    startLabel: 'main',   // MainScene から開始
-  //   width: SCREEN_WIDTH,  // 画面幅
-  //   height: SCREEN_HEIGHT,// 画面高さ
-    assets: ASSETS,       // アセット読み込み
-  });
-  app.enableStats();
-  // 実行
-  app.run();
-});
+      var voice = new Pizzicato.Sound({ source: 'input' });
     </script>
 
   </body>
