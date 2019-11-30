@@ -5,20 +5,59 @@
 phina.globalize();
 
 // 定数
-var ASSETS = {
+const ASSETS = {
   image: {
     dragon: 'https://drive.google.com/uc?id=1EJ6i2fMe5JGL-k_RyaL2eQXLVehyKbPw'
   },
 };
-// var SCREEN_WIDTH  = 465;              // スクリーン幅
-// var SCREEN_HEIGHT = 465;              // スクリーン高さ
-var SPEED         = 10;
+
+// 画面の解像度
+const SCREEN_WIDTH  = window.parent.screen.width * 2;
+const SCREEN_HEIGHT = window.parent.screen.height * 2;
+// const SCREEN_WIDTH  = 1080;
+// const SCREEN_HEIGHT = 1920;
+// アプリ(ブラウザ)の表示領域サイズ 1.78 is magic number
+const WINDOW_WIDTH = window.innerWidth * 1.78;
+const WINDOW_HEIGHT = window.innerHeight * 1.78;
+// const SPEED         = 10;
 
 phina.define("MainScene", {
-  superClass: 'DisplayScene',
+  superClass: 'CanvasScene',
 
   init: function(options) {
     this.superInit(options);
+
+    // 縦の4等分
+    for (let i = 0; i < 5; i++) {
+      var shape = Shape({
+        width: WINDOW_WIDTH * 1,
+        height: 1,
+        backgroundColor: 'red'
+      }).setPosition(
+          this.gridX.center(),
+          WINDOW_HEIGHT / 5 * i
+        )
+        .addChildTo(this);
+    }
+
+    // 横の4等分
+    for (let i = 0; i < 5; i++) {
+      var shape = Shape({
+        width: 1,
+        height: WINDOW_HEIGHT,
+        backgroundColor: 'red'
+      }).setPosition(
+          WINDOW_WIDTH / 4 * i,
+          this.gridY.center()
+        )
+        .addChildTo(this);
+    }
+
+    this.labelArea = LabelArea({
+      text: "window width: " + SCREEN_WIDTH + "\nwindow height: " + SCREEN_HEIGHT + "\ninner width: " + window.innerWidth + "\ninner height: " + window.innerHeight,
+      width: 600,
+      height: 240,
+    }).setPosition(300, 300).addChildTo(this);
 
     this.dragon = Sprite('dragon', 128, 256).addChildTo(this);
     this.dragon.setPosition(600, 800);
