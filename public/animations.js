@@ -32,8 +32,8 @@ phina.define("ToSeeSyuriSosoScene", {
     this.chukuYatchi.tweener.wait(300);
     this.chukuYatchi.setPosition(800, WINDOW_HEIGHT / V_SPLIT_N * 3 - 80);
     this.chukuYatchi.setRotation(0);
-    this.chukuYatchi.alpha = 0;
-    this.chukuYatchi.tweener.fadeIn(2000).play();
+    // this.chukuYatchi.alpha = 0;
+    // this.chukuYatchi.tweener.fadeIn(2000).play();
     // ちゅくやっち動かす
     this.chukuYatchi.tweener
       .to({
@@ -98,8 +98,8 @@ phina.define("ToSeeSyuriHappyScene", {
     this.chukuYatchi.tweener.wait(300);
     this.chukuYatchi.setPosition(800, WINDOW_HEIGHT / V_SPLIT_N * 3 - 80);
     this.chukuYatchi.setRotation(-10);
-    this.chukuYatchi.alpha = 0;
-    this.chukuYatchi.tweener.fadeIn(2000).play();
+    // this.chukuYatchi.alpha = 0;
+    // this.chukuYatchi.tweener.fadeIn(2000).play();
     // ちゅくやっち動かす
     this.chukuYatchi.tweener
       .to({
@@ -164,8 +164,8 @@ phina.define("ToSeeSyuriSudScene", {
     this.chukuYatchi.tweener.wait(300);
     this.chukuYatchi.setPosition(800, WINDOW_HEIGHT / V_SPLIT_N * 3 - 80);
     this.chukuYatchi.setRotation(-10);
-    this.chukuYatchi.alpha = 0;
-    this.chukuYatchi.tweener.fadeIn(2000).play();
+    // this.chukuYatchi.alpha = 0;
+    // this.chukuYatchi.tweener.fadeIn(2000).play();
     // ちゅくやっち動かす
     this.chukuYatchi.tweener
       .to({

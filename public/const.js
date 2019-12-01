@@ -1,7 +1,7 @@
 // 定数
 const ASSETS = {
   image: {
-    homeBackground: 'https://drive.google.com/uc?id=1BmVfkIdbyOUWTfu5m_DR9Frh8KfHmFi8',
+    homeBackground: 'https://drive.google.com/uc?id=1aP7owI_TQy23j1BVGhtKOrQCwOQ8Z6Dk',
     iconMitsukeru: 'https://drive.google.com/uc?id=1c1FyBvCqQSAj6ag1NeP6DELeJoLWdyJl',
     iconOshigoto: 'https://drive.google.com/uc?id=1HqUEa06w89dhDEmX4jhGy4rJuV8A8r5k',
     iconBokin: 'https://drive.google.com/uc?id=1JKyjQRFaJGUq92kmw8DIo_OHk8mNdQbu',
@@ -36,7 +36,14 @@ const ASSETS = {
     fire3: 'https://drive.google.com/uc?id=1QLQGhZd_LmhS7Um7543OPSIesMVdd0_F',
     fire4: 'https://drive.google.com/uc?id=1Xttjt0A0PKuGec9_Q1ow9_DIQ7kE1x8t',
     // back: 'https://drive.google.com/uc?id=1NKrSV77pmY_y-orZjL9IrgYp58W4NdvA',
-    back: 'https://drive.google.com/uc?id=1COGnSEmC4TukHDkyDEg_iekCB4NSaJ3a'
+    back: 'https://drive.google.com/uc?id=1COGnSEmC4TukHDkyDEg_iekCB4NSaJ3a',
+    // home status
+    iconGeneration1: 'https://drive.google.com/uc?id=1vNSEE5YfCz4p9rNRo5FLXwnWKJSPdeKh',
+    iconGeneration2: 'https://drive.google.com/uc?id=1WBJyortEuGrN1wr-4RYIzr0AJ_sh7uqg',
+    iconGeneration3: 'https://drive.google.com/uc?id=1hZRDYWMZfTemvNqzb1rxPQYo42u-XtW1',
+    generationText: 'https://drive.google.com/uc?id=1OQ3adErPc8sfWtR4d471s-bZZo-5X5mH',
+    kawaraNumber: 'https://drive.google.com/uc?id=1cRmFhHia1lDB05BSytbHLl8kl2cBJPqk',
+    shokuninLv: 'https://drive.google.com/uc?id=1cRmFhHia1lDB05BSytbHLl8kl2cBJPqk',
   },
     sound: {
     'bgm': './bgm.mp3',
