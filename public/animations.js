@@ -5,7 +5,7 @@ phina.define("ToSeeSyuriSosoScene", {
     var nextScene = "toSeeSyuriHappy"
     var generation = localStorage.getItem("generation");
     generation = (typeof generation === "undefined" || generation === null) ? 1 : generation;
-    var chukuyatchiPictName = LEVEL_CHUKUYATCHI[generation] + "Sud";
+    var chukuYatchiPictName = LEVEL_CHUKUYATCHI[generation] + "Sud";
     // // フェード
     // var shape = Shape({
     //   width: WINDOW_WIDTH,
@@ -37,14 +37,14 @@ phina.define("ToSeeSyuriSosoScene", {
       own.exit(nextScene);
     }
     // ちゅくやっち生成
-    this.chukuyatchi = Sprite(chukuyatchiPictName, 192, 192).addChildTo(this);
-    this.chukuyatchi.tweener.wait(300);
-    this.chukuyatchi.setPosition(800, WINDOW_HEIGHT / V_SPLIT_N * 3 - 80);
-    this.chukuyatchi.setRotation(0);
-    this.chukuyatchi.alpha = 0;
-    this.chukuyatchi.tweener.fadeIn(2000).play();
+    this.chukuYatchi = Sprite(chukuYatchiPictName, 192, 192).addChildTo(this);
+    this.chukuYatchi.tweener.wait(300);
+    this.chukuYatchi.setPosition(800, WINDOW_HEIGHT / V_SPLIT_N * 3 - 80);
+    this.chukuYatchi.setRotation(0);
+    this.chukuYatchi.alpha = 0;
+    this.chukuYatchi.tweener.fadeIn(2000).play();
     // ちゅくやっち動かす
-    this.chukuyatchi.tweener
+    this.chukuYatchi.tweener
       .to({
         x: 250,
         y: WINDOW_HEIGHT / V_SPLIT_N * 3 - 80,
@@ -53,7 +53,7 @@ phina.define("ToSeeSyuriSosoScene", {
       // .wait(600)
   },
   update: function() {
-    this.chukuyatchi.tweener
+    this.chukuYatchi.tweener
       .by({
         x: -2,
         y: -10,
@@ -73,7 +73,7 @@ phina.define("ToSeeSyuriHappyScene", {
     var nextScene = "toSeeSyuriSud"
     var generation = localStorage.getItem("generation");
     generation = (typeof generation === "undefined" || generation === null) ? 1 : generation;
-    var chukuyatchiPictName = LEVEL_CHUKUYATCHI[generation] + "Sud";
+    var chukuYatchiPictName = LEVEL_CHUKUYATCHI[generation] + "Sud";
     // // フェード 動いてない感じ is ある
     // var shape = Shape({
     //   width: WINDOW_WIDTH,
@@ -105,14 +105,14 @@ phina.define("ToSeeSyuriHappyScene", {
       own.exit(nextScene);
     }
     // ちゅくやっち生成
-    this.chukuyatchi = Sprite(chukuyatchiPictName, 192, 192).addChildTo(this);
-    this.chukuyatchi.tweener.wait(300);
-    this.chukuyatchi.setPosition(800, WINDOW_HEIGHT / V_SPLIT_N * 3 - 80);
-    this.chukuyatchi.setRotation(-10);
-    this.chukuyatchi.alpha = 0;
-    this.chukuyatchi.tweener.fadeIn(2000).play();
+    this.chukuYatchi = Sprite(chukuYatchiPictName, 192, 192).addChildTo(this);
+    this.chukuYatchi.tweener.wait(300);
+    this.chukuYatchi.setPosition(800, WINDOW_HEIGHT / V_SPLIT_N * 3 - 80);
+    this.chukuYatchi.setRotation(-10);
+    this.chukuYatchi.alpha = 0;
+    this.chukuYatchi.tweener.fadeIn(2000).play();
     // ちゅくやっち動かす
-    this.chukuyatchi.tweener
+    this.chukuYatchi.tweener
       .to({
         x: 250,
         y: WINDOW_HEIGHT / V_SPLIT_N * 3 - 80,
@@ -120,7 +120,7 @@ phina.define("ToSeeSyuriHappyScene", {
         }, 4000, "easeOutQuad");
   },
   update: function() {
-    this.chukuyatchi.tweener
+    this.chukuYatchi.tweener
       .by({
         x: -2,
         y: -20,
@@ -140,7 +140,7 @@ phina.define("ToSeeSyuriSudScene", {
     var nextScene = "toSeeSyuriSoso"
     var generation = localStorage.getItem("generation");
     generation = (typeof generation === "undefined" || generation === null) ? 1 : generation;
-    var chukuyatchiPictName = LEVEL_CHUKUYATCHI[generation] + "Sud";
+    var chukuYatchiPictName = LEVEL_CHUKUYATCHI[generation] + "Sud";
     // // フェード
     // var shape = Shape({
     //   width: WINDOW_WIDTH,
@@ -173,14 +173,14 @@ phina.define("ToSeeSyuriSudScene", {
       own.exit(nextScene);
     }
     // ちゅくやっち生成
-    this.chukuyatchi = Sprite(chukuyatchiPictName, 192, 192).addChildTo(this);
-    this.chukuyatchi.tweener.wait(300);
-    this.chukuyatchi.setPosition(800, WINDOW_HEIGHT / V_SPLIT_N * 3 - 80);
-    this.chukuyatchi.setRotation(-10);
-    this.chukuyatchi.alpha = 0;
-    this.chukuyatchi.tweener.fadeIn(2000).play();
+    this.chukuYatchi = Sprite(chukuYatchiPictName, 192, 192).addChildTo(this);
+    this.chukuYatchi.tweener.wait(300);
+    this.chukuYatchi.setPosition(800, WINDOW_HEIGHT / V_SPLIT_N * 3 - 80);
+    this.chukuYatchi.setRotation(-10);
+    this.chukuYatchi.alpha = 0;
+    this.chukuYatchi.tweener.fadeIn(2000).play();
     // ちゅくやっち動かす
-    this.chukuyatchi.tweener
+    this.chukuYatchi.tweener
       .to({
         x: 250,
         y: WINDOW_HEIGHT / V_SPLIT_N * 3 - 80,
@@ -188,7 +188,7 @@ phina.define("ToSeeSyuriSudScene", {
       }, 4000, "easeOutQuad");
   },
   update: function() {
-    this.chukuyatchi.tweener
+    this.chukuYatchi.tweener
       .by({
         x: -1,
         y: -4,
@@ -209,7 +209,7 @@ phina.define("BornScene", {
     var nextScene = "toSeeSyuriHappy"
     var generation = localStorage.getItem("generation");
     generation = (typeof generation === "undefined" || generation === null) ? 1 : generation;
-    var chukuyatchiPictName = LEVEL_CHUKUYATCHI[generation] + "1";
+    var chukuYatchiPictName = LEVEL_CHUKUYATCHI[generation] + "1";
     var shape = Shape({
       width: WINDOW_WIDTH,
       height: WINDOW_HEIGHT,
