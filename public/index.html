@@ -13,7 +13,7 @@
     />
     <link rel="apple-touch-icon" href="logo192.png" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <script type="text/javascript" src='http://cdn.rawgit.com/phi-jp/phina.js/v0.2.0/build/phina.js'></script>
+    <script type="text/javascript" src='https://cdn.rawgit.com/phi-jp/phina.js/v0.2.0/build/phina.js'></script>
     <title>ChukuYatchi</title>
   </head>
   <body>
@@ -21,89 +21,128 @@
     <div id="root"></div>
 
     <script>
-    phina.globalize();
-// 定数
+      phina.globalize();
+      const HEIGHT = window.innerHeight * 1.77;  // 画面の縦幅
+      const WIDTH = window.innerWidth * 1.77;   // 画面の横幅
 var ASSETS = {
   image: {
-    dragon: 'https://drive.google.com/uc?id=1EJ6i2fMe5JGL-k_RyaL2eQXLVehyKbPw'
+    // 背景
+    'backgroundImage': 'https://drive.google.com/uc?id=1BmVfkIdbyOUWTfu5m_DR9Frh8KfHmFi8',
+    // メニューアイコン
+    'iconMitsukeru': 'https://drive.google.com/uc?id=1c1FyBvCqQSAj6ag1NeP6DELeJoLWdyJl',
+    'iconOshigoto': 'https://drive.google.com/uc?id=1HqUEa06w89dhDEmX4jhGy4rJuV8A8r5k',
+    'iconBokin': 'https://drive.google.com/uc?id=1JKyjQRFaJGUq92kmw8DIo_OHk8mNdQbu',
+    // ちゅくやっち
+    'chukuYatchBaby': 'https://drive.google.com/uc?id=1FGw5Q7ISopjn6KcGOtkSY29e69OMb866',
   },
 };
-// var SCREEN_WIDTH  = 465;              // スクリーン幅
-// var SCREEN_HEIGHT = 465;              // スクリーン高さ
-var SPEED         = 10;
-phina.define("MainScene", {
-  superClass: 'DisplayScene',
-  init: function(options) {
-    this.superInit(options);
-    this.dragon = Sprite('dragon', 128, 256).addChildTo(this);
-    this.dragon.setPosition(600, 800);
-    this.dragon.setRotation(0);
-    // this.dragon.frameIndex = 0;
-    this.dragon.tweener
-      .to({
-        x: 400,
-        y: 500,
-        rotation: -30
-      }, 3000, "easeOutQuad");
-      // .wait(600)
-    // for (var i = 0; i < 3; i++) {
-      this.dragon.tweener
-        .by({
-          x: -2,
-          y: -10,
-          rotation: -10,
-        }, 1000, "easeOutQuad")
-        // .wait(800)
-        .by({
-          x: +2,
-          y: +10,
-          rotation: +10,
-        }, 1000, "easeOutQuad").setLoop(true);
-    // }
+phina.define('MainScene', {
+  superClass: 'CanvasScene',
+  
+  init: function() {
+    this.superInit({
+      width: WIDTH,
+      height: HEIGHT,
+    });
+    // 画像
+    this.backgroundImage = Sprite('backgroundImage', WIDTH, HEIGHT).addChildTo(this);
+    this.iconOshigoto = Sprite('iconOshigoto').addChildTo(this);
+    this.iconMitsukeru = Sprite('iconMitsukeru').addChildTo(this);
+    this.iconBokin = Sprite('iconBokin').addChildTo(this);
+    this.chukuYatchiBaby = Sprite('chukuYatchBaby', 200, 200).addChildTo(this);
+    
+    // 画像の配置
+    // 背景
+    this.backgroundImage.x = this.gridX.center();
+    this.backgroundImage.y = this.gridY.center();
+    // ちゅくやっち
+    this.chukuYatchiBaby.x = this.gridX.center();
+    this.chukuYatchiBaby.y = this.gridY.span(10);
+    // みつけるアイコン
+    this.iconMitsukeru.x = this.gridX.span(3);
+    this.iconMitsukeru.y = this.gridY.span(15);
+    // おしごとアイコン
+    this.iconOshigoto.x = this.gridX.center();
+    this.iconOshigoto.y = this.gridY.span(15);
+    // 募金アイコン
+    this.iconBokin.x = this.gridX.span(13)
+    this.iconBokin.y = this.gridY.span(15);
+    var beforeTime = new Date().getSeconds();
+    var label = Label({
+      text: '',
+      fontSize: 48,
+      fill: 'blue',
+      x: this.gridX.center(),
+      y: this.gridY.center(),
+    }).addChildTo(this);
+    // 更新
+    this.update = function(app) {
+      var afterTime = new Date().getSeconds();
+      label.text = afterTime;
+    };
+    // タッチを有効にする
+    this.iconOshigoto.setInteractive(true);
+    this.chukuYatchiBaby.tweener.to({
+      x: this.gridX.span(13),
+    },3000,"default")
+    .to({
+      x: this.gridX.span(4),
+    },3000,"default")
+    .setLoop(true);
+    // おしごとアイコンをタップしたときの処理
+    var own = this;
+    this.iconOshigoto.onpointstart = function() {
+      own.exit('oshigotoMenu');
+    };
   },
-  update: function() {
-  }
-  // // 更新
-  // update: function(app) {
-  //   var p = app.pointer;
-  //   if (p.getPointing()) {
-  //     var diff = this.player.x - p.x;
-  //     if (Math.abs(diff) > SPEED) {
-  //       // 右に移動
-  //       if (diff < 0) {
-  //         this.player.x += SPEED;
-  //         this.player.scaleX = -1;
-  //       }
-  //       // 左に移動
-  //       else {
-  //         this.player.x -= SPEED;
-  //         this.player.scaleX = 1;
-  //       }
-  //       // フレームアニメーション
-  //       if (app.frame % 4 === 0) {
-  //         this.player.frameIndex = (this.player.frameIndex === 12) ? 13:12;
-  //       }
-  //     }
-  //   }
-  //   else {
-  //     // 待機
-  //     this.player.frameIndex = 0;
-  //   }
-  // }
 });
-/*
- * メイン処理
- */
+// おしごとメニュー
+phina.define("OshigotoMenu", {
+  superClass: 'CanvasScene',
+  
+  init: function() {
+    this.superInit({
+      width: WIDTH,
+      height: HEIGHT,
+    });
+    // 画像配置
+    this.backgroundImage = Sprite('backgroundImage', WIDTH, HEIGHT).setPosition(this.gridX.center(), this.gridY.center()).addChildTo(this);
+    this.iconKawaraYaki = Sprite('iconMitsukeru').setPosition(this.gridX.span(5), this.gridY.center()).addChildTo(this);
+    this.iconKawaraNage = Sprite('iconBokin').setPosition(this.gridX.span(11), this.gridY.center()).addChildTo(this);
+    // タッチを有効にする
+    this.iconKawaraYaki.setInteractive(true);
+    this.iconKawaraNage.setInteractive(true);
+    var own = this;
+    // 瓦焼きアイコンをタップしたときの処理
+    this.iconKawaraYaki.onpointstart = function() {
+      own.exit('main');
+    };
+    // 瓦投げアイコンをタップしたときの処理
+    this.iconKawaraNage.onpointstart = function() {
+      own.exit('main');
+    };
+  },
+});
 phina.main(function() {
-  // アプリケーションを生成
   var app = GameApp({
-    startLabel: 'main',   // MainScene から開始
-  //   width: SCREEN_WIDTH,  // 画面幅
-  //   height: SCREEN_HEIGHT,// 画面高さ
-    assets: ASSETS,       // アセット読み込み
+    startLabel: 'main',
+    scenes: [
+      {
+        className: 'MainScene',
+        label: 'main',
+        nextLabel: '',
+      },
+      {
+        className: "OshigotoMenu",
+        label: 'oshigotoMenu',
+        nextLabel: '',
+      },
+    ],
+    assets: ASSETS,
+    height: HEIGHT,
+    width: WIDTH,
   });
-  app.enableStats();
-  // 実行
+  
   app.run();
 });
     </script>
