@@ -97,7 +97,7 @@ phina.define("OshigotoMenu", {
     var own = this;
     // 瓦焼きアイコンをタップしたときの処理
     this.iconKawaraYaki.onpointstart = function() {
-      own.exit('main');
+      own.exit('kawaraYaki');
     };
     // 瓦投げアイコンをタップしたときの処理
     this.iconKawaraNage.onpointstart = function() {
