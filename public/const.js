@@ -7,6 +7,7 @@ const ASSETS = {
     iconBokin: 'https://drive.google.com/uc?id=1JKyjQRFaJGUq92kmw8DIo_OHk8mNdQbu',
     iconKawaraYaki: 'https://drive.google.com/uc?id=1K0gxoUSnSz1Bb4CJ_G7C9UKgkupiaPjX',
     iconKawaraNage: 'https://drive.google.com/uc?id=1bBIfEofx8E-bZLSE96DBwITnDru6NTWg',
+    iconBack: 'https://drive.google.com/uc?id=1COGnSEmC4TukHDkyDEg_iekCB4NSaJ3a',
     // kawaranage
     kawara: 'https://drive.google.com/uc?id=1c-JHnfhNLn22BfbB5Yli6gnDuIkJC7dH',
     shadow: 'https://drive.google.com/uc?id=1S65yAn0-Ce7ZBdQFT9f0Uf00W4w7_mI8',
@@ -63,6 +64,7 @@ var TILE_HEIGHT = 50;
 var TILE_MARGIN_X = 0.1;
 var TILE_MARGIN_Y = 0.5;
 var KAWARA_INIT_Y = 900;
-var KAWARA_INIT_X = 325;
+var KAWARA_INIT_X = WINDOW_WIDTH / 2;
+// var KAWARA_INIT_X = 325;
 var SHURI_INIT_Y = 315;
 var SHURI_INIT_X = 212;
