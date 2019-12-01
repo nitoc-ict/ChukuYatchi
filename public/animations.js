@@ -18,24 +18,15 @@ phina.define("ToSeeSyuriSosoScene", {
     var syuri_castle = Sprite('syuri_castle2', WINDOW_WIDTH, WINDOW_HEIGHT)
       .setPosition(this.gridX.center(), this.gridY.center())
       .addChildTo(this);
-    // TODO 戻るボタンの画像をもらったら変える
-    this.button = Button({
-      x: this.gridX.center(),
-      y: WINDOW_HEIGHT / V_SPLIT_N * 3 + BUTTON_DISTANCE,
-      width: 150,
-      height: 100,
-      text: "button",
-      fontSize: 32,
-      fontColor: "white",
-      cornerRadius: 10,
-      fill: "skyblue",
-      stroke: "blue",
-      strokeWidth: 5,
-    }).addChildTo(this);
-    var own = this;
-    this.button.onpointend = function() {
-      own.exit(nextScene);
-    }
+
+    // 戻るボタン
+    this.back = Sprite('back').addChildTo(this);
+    this.back.x = this.gridX.center(),
+    this.back.y = WINDOW_HEIGHT / V_SPLIT_N * 3 + BUTTON_DISTANCE,
+    this.back.width = 150;
+    this.back.height = 100;
+    this.back.setInteractive(true);
+
     // ちゅくやっち生成
     this.chukuYatchi = Sprite(chukuYatchiPictName, 192, 192).addChildTo(this);
     this.chukuYatchi.tweener.wait(300);
@@ -86,24 +77,22 @@ phina.define("ToSeeSyuriHappyScene", {
     var syuri_castle = Sprite('syuri_castle3', WINDOW_WIDTH, WINDOW_HEIGHT)
       .setPosition(this.gridX.center(), this.gridY.center())
       .addChildTo(this);
-    // TODO 戻るボタンの画像をもらったら変える
-    this.button = Button({
-      x: this.gridX.center(),
-      y: WINDOW_HEIGHT / V_SPLIT_N * 3 + BUTTON_DISTANCE,
-      width: 150,
-      height: 100,
-      text: "button",
-      fontSize: 32,
-      fontColor: "white",
-      cornerRadius: 10,
-      fill: "skyblue",
-      stroke: "blue",
-      strokeWidth: 5,
-    }).addChildTo(this);
+
+    // 戻るボタン
+    this.back = Sprite('back').addChildTo(this);
+    this.back.x = this.gridX.center(),
+    this.back.y = WINDOW_HEIGHT / V_SPLIT_N * 3 + BUTTON_DISTANCE,
+    this.back.width = 150;
+    this.back.height = 100;
+    this.back.setInteractive(true);
+
+    // もどるアイコンをタップしたときの処理
     var own = this;
-    this.button.onpointend = function() {
+    this.back.onpointstart = function() {
+      madeTiles = parseInt(localStorage.getItem("made_tile_number"));
+      localStorage.setItem("made_tile_number", madeTiles + gameScore / 10);
       own.exit(nextScene);
-    }
+    };
     // ちゅくやっち生成
     this.chukuYatchi = Sprite(chukuYatchiPictName, 192, 192).addChildTo(this);
     this.chukuYatchi.tweener.wait(300);
@@ -153,25 +142,22 @@ phina.define("ToSeeSyuriSudScene", {
     var syuri_castle = Sprite('syuri_castle1', WINDOW_WIDTH, WINDOW_HEIGHT)
       .setPosition(this.gridX.center(), this.gridY.center())
       .addChildTo(this);
-    // TODO 戻るボタンの画像をもらったら変える
-    this.button = Button({
-      x: this.gridX.center(),
-      y: WINDOW_HEIGHT / V_SPLIT_N * 3 + BUTTON_DISTANCE,
-      width: 150,
-      height: 100,
-      text: "button",
-      fontSize: 32,
-      fontColor: "white",
-      cornerRadius: 10,
-      fill: "skyblue",
-      stroke: "blue",
-      strokeWidth: 5,
-    }).addChildTo(this);
+
+    // 戻るボタン
+    this.back = Sprite('back').addChildTo(this);
+    this.back.x = this.gridX.center(),
+    this.back.y = WINDOW_HEIGHT / V_SPLIT_N * 3 + BUTTON_DISTANCE,
+    this.back.width = 150;
+    this.back.height = 100;
+    this.back.setInteractive(true);
+    // もどるアイコンをタップしたときの処理
     var own = this;
-    this.button.onpointend = function() {
-      // TODO 次に行くシーンを指定
+    this.back.onpointstart = function() {
+      madeTiles = parseInt(localStorage.getItem("made_tile_number"));
+      localStorage.setItem("made_tile_number", madeTiles + gameScore / 10);
       own.exit(nextScene);
-    }
+    };
+
     // ちゅくやっち生成
     this.chukuYatchi = Sprite(chukuYatchiPictName, 192, 192).addChildTo(this);
     this.chukuYatchi.tweener.wait(300);

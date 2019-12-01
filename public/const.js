@@ -27,7 +27,19 @@ const ASSETS = {
     dragon: 'https://drive.google.com/uc?id=18Nc6JMrhWp9dU8mtp9Lc3zkw4MuxhIbW',
     syuri_castle1: 'https://drive.google.com/uc?id=1uw5lXomtWj4YtEt3wNAblCZp_XbkM20-',
     syuri_castle2: 'https://drive.google.com/uc?id=1vL7xzp32vAjz20cReT0Tc-MfOzklSO7l',
-    syuri_castle3: 'https://drive.google.com/uc?id=1szNkd3N_1QMH2wE-AK2mKqru5298Y0-l'
+    syuri_castle3: 'https://drive.google.com/uc?id=1szNkd3N_1QMH2wE-AK2mKqru5298Y0-l',
+    uchiwa: 'https://drive.google.com/uc?id=1xXLdSzMglC8iLn0moIzIZ-KH16GDNcfI',
+    uchiwa2: 'https://drive.google.com/uc?id=1S4EcNFIzlEmLtqt8m4HZLKhNufULcd_9',
+    kamado: 'https://drive.google.com/uc?id=1JFX4Im7h_gyubtJR3BReKeEawmbWHl0A',
+    fire1: 'https://drive.google.com/uc?id=1NehPRUijw0gZ9J4QLh6VRl73YIrrxQBs',
+    fire2: 'https://drive.google.com/uc?id=1keye0H-z1pgZGpnH629B0JUYg-yQwbzb',
+    fire3: 'https://drive.google.com/uc?id=1QLQGhZd_LmhS7Um7543OPSIesMVdd0_F',
+    fire4: 'https://drive.google.com/uc?id=1Xttjt0A0PKuGec9_Q1ow9_DIQ7kE1x8t',
+    // back: 'https://drive.google.com/uc?id=1NKrSV77pmY_y-orZjL9IrgYp58W4NdvA',
+    back: 'https://drive.google.com/uc?id=1COGnSEmC4TukHDkyDEg_iekCB4NSaJ3a'
+  },
+    sound: {
+    'bgm': './bgm.mp3',
   },
 };
 const LEVEL_CHUKUYATCHI = [

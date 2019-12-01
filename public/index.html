@@ -13,6 +13,7 @@
     />
     <link rel="apple-touch-icon" href="logo192.png" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+
     <script type="text/javascript" src='https://cdn.rawgit.com/phi-jp/phina.js/v0.2.0/build/phina.js'></script>
     <title>ChukuYatchi</title>
   </head>
@@ -20,12 +21,14 @@
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
 
+
     <script>
       phina.globalize();
     </script>
     <script src="./const.js"></script>
     <script src="./animations.js"></script>
     <script src="./kawaranage.js"></script>
+    <script src="./kawarayaki.js"></script>
     <script src="./home.js"></script>
     <script>
 /*
@@ -82,12 +85,17 @@ phina.main(function() {
         className: 'KawaraThrowScene',
         label: 'kawaraThrow',
       },
+      {
+        className: 'KawaraYakiScene',
+        label: 'kawaraYaki',
+      },
     ]
   });
   app.enableStats();
   // 実行
   app.run();
 });
+
     </script>
 
   </body>
