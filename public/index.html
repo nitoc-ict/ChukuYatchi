@@ -154,8 +154,9 @@
           // もどるアイコンをタップしたときの処理
           var own = this;
           this.back.onpointstart = function() {
-            localStorage.setItem("tile_number", gameScore / 10);
-            //own.exit('MainScene');
+            madeTiles = parseInt(localStorage.getItem("made_tile_number"));
+            localStorage.setItem("made_tile_number", madeTiles + gameScore / 10);
+            own.exit('main');
           };
         },
         update: function() {
