@@ -61,6 +61,10 @@ phina.define('MainScene', {
         own.exit('main');
       }
     }
+    this.iconBokin.setInteractive(true);
+    this.iconBokin.onpointstart = function() {
+      window.confirm("募金に関しましては那覇市公式のサイトを参照ください.\n https://www.city.naha.okinawa.jp/safety/sinsai/shurijousienkin.html");
+    }
   },
 });
 
