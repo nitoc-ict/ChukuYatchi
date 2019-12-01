@@ -7,6 +7,10 @@ const ASSETS = {
     iconBokin: 'https://drive.google.com/uc?id=1JKyjQRFaJGUq92kmw8DIo_OHk8mNdQbu',
     iconKawaraYaki: 'https://drive.google.com/uc?id=1K0gxoUSnSz1Bb4CJ_G7C9UKgkupiaPjX',
     iconKawaraNage: 'https://drive.google.com/uc?id=1bBIfEofx8E-bZLSE96DBwITnDru6NTWg',
+    // kawaranage
+    kawara: 'https://drive.google.com/uc?id=1c-JHnfhNLn22BfbB5Yli6gnDuIkJC7dH',
+    shadow: 'https://drive.google.com/uc?id=1S65yAn0-Ce7ZBdQFT9f0Uf00W4w7_mI8',
+    shuri: 'https://drive.google.com/uc?id=1sL_spFghcw79aTCR2AA5UMpIYn7Qa3yc',
     chukuYatchiBabyHappy: 'https://drive.google.com/uc?id=1PKX2_oJxnDx6IZdsJ3tSgDoncdicr-nI',
     chukuYatchiBabySud: 'https://drive.google.com/uc?id=1kQPj7UVaocmbOEu-jBvxvVO3LCvuyJ12',
     chukuYatchiBaby1: 'https://drive.google.com/uc?id=1FGw5Q7ISopjn6KcGOtkSY29e69OMb866',
