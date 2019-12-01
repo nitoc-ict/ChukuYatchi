@@ -13,14 +13,89 @@
     />
     <link rel="apple-touch-icon" href="logo192.png" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <script type="text/javascript" src='//cdn.rawgit.com/phi-jp/phina.js/v0.2.0/build/phina.js'></script>
+
+    <script type="text/javascript" src='https://cdn.rawgit.com/phi-jp/phina.js/v0.2.0/build/phina.js'></script>
     <title>ChukuYatchi</title>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
 
-    <script src='index.js'>
+
+    <script>
+      phina.globalize();
+    </script>
+    <script src="./const.js"></script>
+    <script src="./animations.js"></script>
+    <script src="./kawaranage.js"></script>
+    <script src="./kawarayaki.js"></script>
+    <script src="./home.js"></script>
+    <script>
+/*
+ * メイン処理
+ */
+phina.main(function() {
+  // アプリケーションを生成
+  var firstScene = "main";
+  var initialBoot = localStorage.getItem("initialBoot");
+  console.log("initialBoot: " + initialBoot);
+  if (typeof initialBoot === "undefined" || initialBoot === null) {
+    localStorage.setItem("initialBoot", "false");
+    localStorage.setItem("made_tile_number", "0");
+    localStorage.setItem("put_tile_number", "0");
+    localStorage.setItem("level", "1");
+    localStorage.setItem("evolvedForm", "1");
+    localStorage.setItem("genaration", "1");
+    localStorage.setItem("syuri_level", "1");
+    localStorage.setItem("startDate", new Date().toString());
+    // put_kawaraもセットする
+    // firstScene = "born";
+  }
+  var app = GameApp({
+    startLabel: firstScene,   // MainScene から開始
+    width: WINDOW_WIDTH,  // 画面幅
+    height: WINDOW_HEIGHT,// 画面高さ
+    assets: ASSETS,       // アセット読み込み
+    scenes: [
+      {
+        className: 'MainScene',
+        label: 'main',
+      },
+      {
+        className: 'OshigotoMenu',
+        label: 'oshigotoMenu',
+      },
+      {
+        className: 'ToSeeSyuriSosoScene',
+        label: 'toSeeSyuriSoso',
+      },
+      {
+        className: 'ToSeeSyuriHappyScene',
+        label: 'toSeeSyuriHappy',
+      },
+      {
+        className: 'ToSeeSyuriSudScene',
+        label: 'toSeeSyuriSud',
+      },
+      {
+        className: 'BornScene',
+        label: 'born',
+      },
+      {
+        className: 'KawaraThrowScene',
+        label: 'kawaraThrow',
+      },
+      {
+        className: 'KawaraYakiScene',
+        label: 'kawaraYaki',
+      },
+    ]
+  });
+  app.enableStats();
+  // 実行
+  app.run();
+});
+
     </script>
 
   </body>
