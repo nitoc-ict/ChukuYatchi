@@ -11,14 +11,37 @@ phina.define('MainScene', {
     this.iconOshigoto = Sprite('iconOshigoto').addChildTo(this);
     this.iconMitsukeru = Sprite('iconMitsukeru').addChildTo(this);
     this.iconBokin = Sprite('iconBokin').addChildTo(this);
-    this.iconKawaraYaki = Sprite('iconKawaraYaki').addChildTo(this);
-    this.iconKawaraNage = Sprite('iconKawaraNage').addChildTo(this);
     this.chukuYatchiBaby = Sprite('chukuYatchiBaby1', 200, 200).addChildTo(this);
-    
-    // 画像の配置
+    this.iconGeneration = Sprite('iconGeneration1').addChildTo(this);
+    this.generationText = Sprite('generationText').addChildTo(this);
+    this.shokuninLv = Sprite('shokuninLv').addChildTo(this);
+    this.kawaraNumber = Sprite('kawaraNumber').addChildTo(this);
+
+    // 配置
     // 背景
     this.backgroundImage.x = this.gridX.center();
     this.backgroundImage.y = this.gridY.center();
+    // ステータス
+    // ハイビスカスアイコン
+    this.iconGeneration.x = this.gridX.span(3);
+    this.iconGeneration.y = this.gridY.span(1);
+    // N代目 ちゅくやっち
+    this.generationText.setPosition(285, 80);
+    // 職人レベル
+    this.shokuninLv.setPosition(260, 110);
+    var generationLvLabel = Label({
+      text: localStorage.getItem("genaration"),
+      fontsize: 7,
+      fill: "#7a280f",
+    }).addChildTo(this).setPosition(320, 110);
+    // 瓦の数
+    this.kawaraNumber.setPosition(450, 110);
+    var kawaraNumberLabel = Label({
+      text: localStorage.getItem("made_tile_number"),
+      fontsize: 7,
+      fill: "#7a280f",
+    }).addChildTo(this).setPosition(510, 110);
+
     // ちゅくやっち
     this.chukuYatchiBaby.x = this.gridX.center();
     this.chukuYatchiBaby.y = this.gridY.span(10);
@@ -32,19 +55,7 @@ phina.define('MainScene', {
     // 募金アイコン
     this.iconBokin.x = this.gridX.span(13)
     this.iconBokin.y = this.gridY.span(15);
-    var beforeTime = new Date().getSeconds();
-    var label = Label({
-      text: '',
-      fontSize: 48,
-      fill: 'blue',
-      x: this.gridX.center(),
-      y: this.gridY.center(),
-    }).addChildTo(this);
-    // 更新
-    this.update = function(app) {
-      var afterTime = new Date().getSeconds();
-      label.text = afterTime;
-    };
+
     // タッチを有効にする
     this.iconOshigoto.setInteractive(true);
     this.chukuYatchiBaby.tweener.to({
