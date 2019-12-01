@@ -23,7 +23,8 @@ phina.define("KawaraThrowScene", {
   superClass: "DisplayScene",
   init: function () {
     this.superInit();
-    // プレイヤー
+    this.backgroundColor = '#e3f7fe';
+
     this.shuriCastle = ShuriCastle().addChildTo(this);
     this.kawara = Kawara().addChildTo(this);
 
