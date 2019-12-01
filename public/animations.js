@@ -3,9 +3,9 @@ phina.define("ToSeeSyuriSosoScene", {
   init: function(options) {
     this.superInit(options);
     var nextScene = "main"
-    var generation = localStorage.getItem("generation");
-    generation = (typeof generation === "undefined" || generation === null) ? 1 : generation;
-    var chukuYatchiPictName = LEVEL_CHUKUYATCHI[generation] + "Sud";
+    var evolvedForm = localStorage.getItem("evolvedForm");
+    evolvedForm = (typeof evolvedForm === "undefined" || evolvedForm === null) ? 1 : evolvedForm;
+    var chukuYatchiPictName = LEVEL_CHUKUYATCHI[evolvedForm - 1] + "Sud";
     // // フェード
     // var shape = Shape({
     //   width: WINDOW_WIDTH,
@@ -62,9 +62,9 @@ phina.define("ToSeeSyuriHappyScene", {
   init: function(options) {
     this.superInit(options);
     var nextScene = "main"
-    var generation = localStorage.getItem("generation");
-    generation = (typeof generation === "undefined" || generation === null) ? 1 : generation;
-    var chukuYatchiPictName = LEVEL_CHUKUYATCHI[generation] + "Sud";
+    var evolvedForm = localStorage.getItem("evolvedForm");
+    evolvedForm = (typeof evolvedForm === "undefined" || evolvedForm === null) ? 1 : evolvedForm;
+    var chukuYatchiPictName = LEVEL_CHUKUYATCHI[evolvedForm - 1] + "Sud";
     // // フェード 動いてない感じ is ある
     // var shape = Shape({
     //   width: WINDOW_WIDTH,
@@ -127,9 +127,10 @@ phina.define("ToSeeSyuriSudScene", {
   init: function(options) {
     this.superInit(options);
     var nextScene = "main"
-    var generation = localStorage.getItem("generation");
-    generation = (typeof generation === "undefined" || generation === null) ? 1 : generation;
-    var chukuYatchiPictName = LEVEL_CHUKUYATCHI[generation] + "Sud";
+    var evolvedForm = localStorage.getItem("evolvedForm");
+    evolvedForm = (typeof evolvedForm === "undefined" || evolvedForm === null) ? 1 : evolvedForm;
+    var chukuYatchiPictName = LEVEL_CHUKUYATCHI[evolvedForm - 1] + "Sud";
+    console.log(chukuYatchiPictName);
     // // フェード
     // var shape = Shape({
     //   width: WINDOW_WIDTH,
@@ -193,9 +194,9 @@ phina.define("BornScene", {
   init: function(options) {
     this.superInit(options);
     var nextScene = "toSeeSyuriHappy"
-    var generation = localStorage.getItem("generation");
-    generation = (typeof generation === "undefined" || generation === null) ? 1 : generation;
-    var chukuYatchiPictName = LEVEL_CHUKUYATCHI[generation] + "1";
+    var evolvedForm = localStorage.getItem("evolvedForm");
+    evolvedForm = (typeof evolvedForm === "undefined" || evolvedForm === null) ? 1 : evolvedForm;
+    var chukuYatchiPictName = LEVEL_CHUKUYATCHI[evolvedForm - 1] + "1";
     var shape = Shape({
       width: WINDOW_WIDTH,
       height: WINDOW_HEIGHT,

@@ -90,7 +90,11 @@ beginDetect();  // load時からvolumeを取る
     var own = this;
     this.back.onpointstart = function() {
       madeTiles = parseInt(localStorage.getItem("made_tile_number"));
+      console.log(evolvedForm)
+      var evolvedForm = parseInt(localStorage.getItem("evolvedForm"));
+      evolvedForm = evolvedForm >= 3 ? 3 : evolvedForm + 1;
       localStorage.setItem("made_tile_number", madeTiles + gameScore / 10);
+      localStorage.setItem("evolvedForm", evolvedForm);
       own.exit('main');
     };
   },

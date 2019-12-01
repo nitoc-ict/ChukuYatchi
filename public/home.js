@@ -6,6 +6,11 @@ phina.define('MainScene', {
       width: WINDOW_WIDTH,
       height: WINDOW_HEIGHT,
     });
+
+    var evolvedForm = localStorage.getItem("evolvedForm");
+    evolvedForm = (typeof evolvedForm === "undefined" || evolvedForm === null) ? 1 : evolvedForm;
+    var chukuYatchiPictName = LEVEL_CHUKUYATCHI[evolvedForm - 1] + "1";
+
     // 画像
     this.backgroundImage = Sprite('homeBackground', WINDOW_WIDTH, WINDOW_HEIGHT).addChildTo(this);
     this.iconOshigoto = Sprite('iconOshigoto').addChildTo(this);
@@ -13,15 +18,15 @@ phina.define('MainScene', {
     this.iconBokin = Sprite('iconBokin').addChildTo(this);
     this.iconKawaraYaki = Sprite('iconKawaraYaki').addChildTo(this);
     this.iconKawaraNage = Sprite('iconKawaraNage').addChildTo(this);
-    this.chukuYatchiBaby = Sprite('chukuYatchiBaby1', 200, 200).addChildTo(this);
+    this.chukuYatchi = Sprite(chukuYatchiPictName, 200, 200).addChildTo(this);
     
     // 画像の配置
     // 背景
     this.backgroundImage.x = this.gridX.center();
     this.backgroundImage.y = this.gridY.center();
     // ちゅくやっち
-    this.chukuYatchiBaby.x = this.gridX.center();
-    this.chukuYatchiBaby.y = this.gridY.span(10);
+    this.chukuYatchi.x = this.gridX.center();
+    this.chukuYatchi.y = this.gridY.span(10);
     // みつけるアイコン
     this.iconMitsukeru.x = this.gridX.span(3);
     this.iconMitsukeru.y = this.gridY.span(15);
@@ -47,7 +52,7 @@ phina.define('MainScene', {
     };
     // タッチを有効にする
     this.iconOshigoto.setInteractive(true);
-    this.chukuYatchiBaby.tweener.to({
+    this.chukuYatchi.tweener.to({
       x: this.gridX.span(13),
     },3000,"default")
     .to({
