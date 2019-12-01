@@ -32,19 +32,6 @@ phina.define('MainScene', {
     // 募金アイコン
     this.iconBokin.x = this.gridX.span(13)
     this.iconBokin.y = this.gridY.span(15);
-    var beforeTime = new Date().getSeconds();
-    var label = Label({
-      text: '',
-      fontSize: 48,
-      fill: 'blue',
-      x: this.gridX.center(),
-      y: this.gridY.center(),
-    }).addChildTo(this);
-    // 更新
-    this.update = function(app) {
-      var afterTime = new Date().getSeconds();
-      label.text = afterTime;
-    };
     // タッチを有効にする
     this.iconOshigoto.setInteractive(true);
     this.chukuYatchiBaby.tweener.to({
@@ -91,6 +78,13 @@ phina.define("OshigotoMenu", {
     this.backgroundImage = Sprite('homeBackground', WINDOW_WIDTH, WINDOW_HEIGHT).setPosition(this.gridX.center(), this.gridY.center()).addChildTo(this);
     this.iconKawaraYaki = Sprite('iconKawaraYaki').setPosition(this.gridX.span(5), this.gridY.center()).addChildTo(this);
     this.iconKawaraNage = Sprite('iconKawaraNage').setPosition(this.gridX.span(11), this.gridY.center()).addChildTo(this);
+    // 戻るボタン
+    this.back = Sprite('back').addChildTo(this);
+    this.back.x = this.gridX.center(),
+    this.back.y = WINDOW_HEIGHT / V_SPLIT_N * 3 + BUTTON_DISTANCE,
+    this.back.width = 150;
+    this.back.height = 100;
+    this.back.setInteractive(true);
     // タッチを有効にする
     this.iconKawaraYaki.setInteractive(true);
     this.iconKawaraNage.setInteractive(true);
