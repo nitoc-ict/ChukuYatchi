@@ -1,0 +1,10 @@
+{
+  "devToolsPort": 19002,
+  "expoServerPort": 19000,
+  "packagerPort": 19001,
+  "packagerPid": 128,
+  "expoServerNgrokUrl": "https://63-nwt.anonymous.chukuyatchi.exp.direct",
+  "packagerNgrokUrl": "https://packager.63-nwt.anonymous.chukuyatchi.exp.direct",
+  "ngrokPid": 157,
+  "webpackServerPort": null
+}
