@@ -1,16 +1,21 @@
 phina.globalize();
 
-var MAX_ROOF_WIDTH = 4;
+var MAX_ROOF_WIDTH = 8;
 var MAX_ROOF_HEIGHT = 3;
 var TILE_WIDTH = 80;
 var TILE_HEIGHT = 50;
-var TILE_MARGIN = 8;
-var KAWARA_INIT_Y = 700;
+var TILE_MARGIN_X = 0.1;
+var TILE_MARGIN_Y = 0.5;
+var KAWARA_INIT_Y = 900;
 var KAWARA_INIT_X = 325;
+var SHURI_INIT_Y = 315;
+var SHURI_INIT_X = 212;
 
 var ASSETS = {
   image: {
-    kawara: "https://drive.google.com/uc?id=1EJ6i2fMe5JGL-k_RyaL2eQXLVehyKbPw",
+    kawara: 'https://drive.google.com/uc?id=1c-JHnfhNLn22BfbB5Yli6gnDuIkJC7dH',
+    shadow: 'https://drive.google.com/uc?id=1S65yAn0-Ce7ZBdQFT9f0Uf00W4w7_mI8',
+    shuri: 'https://drive.google.com/uc?id=1sL_spFghcw79aTCR2AA5UMpIYn7Qa3yc',
   },
 };
 
@@ -19,6 +24,7 @@ phina.define("KawaraThrowScene", {
   init: function () {
     this.superInit();
     // プレイヤー
+    this.shuriCastle = ShuriCastle().addChildTo(this);
     this.kawara = Kawara().addChildTo(this);
 
     var endButton = Button({
@@ -61,10 +67,11 @@ phina.define("KawaraThrowScene", {
     (MAX_ROOF_HEIGHT * MAX_ROOF_WIDTH).times(function (i) {
       let x = i % MAX_ROOF_WIDTH;
       let y = Math.floor(i / MAX_ROOF_WIDTH);
-      let tile = Tile().addChildTo(this.roof).setPosition(x * (TILE_WIDTH + TILE_MARGIN), 100 + y * (TILE_HEIGHT + TILE_MARGIN));
+      let tile = Tile().addChildTo(this.roof);
+      tile.setPosition(x * (tile.width + TILE_MARGIN_X), 100 + y * (tile.height + TILE_MARGIN_Y));
       tile.hitted = this.game_state.put_kawara[i];
       if (tile.hitted) {
-        tile.fill = 'red';
+        tile.hit();
       }
     }, this);
     this.label = Label('のこり\n' + this.game_state.kawara_num + 'コ').addChildTo(this);
@@ -90,6 +97,7 @@ phina.define("KawaraThrowScene", {
     if (this.kawara.y <= 0 || this.kawara.y >= 970) {
       this.kawara.hit();
     }
+    this.kawara.rotation += 20;
     this.checkHit();
     // 重力情報
     var accel = app.accelerometer;
@@ -117,9 +125,14 @@ phina.define("KawaraThrowScene", {
       if (!this.kawara.throwed) {
         this.roof.children.each(function (tile) {
           let x = i % MAX_ROOF_WIDTH;
-          tile.x = x * (TILE_WIDTH + TILE_MARGIN) + dx * 4;
+          if (tile.hitted) {
+            tile.x = x * (tile.width + TILE_MARGIN_X + 5) + dx * 4;
+          } else {
+            tile.x = x * (tile.width + TILE_MARGIN_X) + dx * 4;
+          }
           ++i;
         });
+        this.shuriCastle.x = SHURI_INIT_X + dx * 4;
       }
     });
   },
@@ -131,44 +144,11 @@ phina.define("KawaraThrowScene", {
         tile.fill = 'red';
         this.hit_kawara_num = 0;
         tile.hitted = true;
+        tile.hit();
         kawara.hit();
       }
     });
   },
-});
-phina.define('Tile', {
-  superClass: 'RectangleShape',
-  init: function () {
-    this.superInit({
-      width: TILE_WIDTH,
-      height: TILE_HEIGHT,
-      stroke: '#aaa',
-      strokeWidth: 4,
-      fill: 'blue',
-      cornerRadius: 4,
-    });
-    this.hitted = false;
-  }
-});
-phina.define('Kawara', {
-  //superClass: 'RectangleShape',
-  superClass: 'Sprite',
-  init: function () {
-    this.superInit('dlang');
-    this.x = KAWARA_INIT_X;
-    this.y = KAWARA_INIT_Y;
-    this.physical.friction = 0.98;
-    this.physical.force(0, 0);
-    this.throwed = false;
-  },
-  hit: function () {
-    this.y = KAWARA_INIT_Y;
-    this.physical.force(0, 0);
-    this.throwed = false;
-  },
-  isThrow: function (h) {
-    return h < -20;
-  }
 });
 phina.define('GameState', {
   init: function (kawara_num, put_kawara) {
@@ -178,18 +158,24 @@ phina.define('GameState', {
   },
 });
 
+phina.define('ShuriCastle', {
+  superClass: 'Sprite',
+  init: function() {
+    this.superInit('shuri');
+    this.x = SHURI_INIT_X;
+    this.y = SHURI_INIT_Y;
+  }
+});
+
 phina.define('Tile', {
-  superClass: 'RectangleShape',
+  // superClass: 'RectangleShape',
+  superClass: 'Sprite',
   init: function () {
-    this.superInit({
-      width: TILE_WIDTH,
-      height: TILE_HEIGHT,
-      stroke: '#aaa',
-      strokeWidth: 4,
-      fill: 'blue',
-      cornerRadius: 4,
-    });
+    this.superInit('shadow');
     this.hitted = false;
+  },
+  hit: function() {
+    this.setImage('kawara');
   }
 });
 phina.define('Kawara', {
@@ -212,6 +198,7 @@ phina.define('Kawara', {
     return h < -20;
   }
 });
+
 phina.define('GameState', {
   init: function(kawara_num, put_kawara) {
     this.kawara_num = kawara_num;
