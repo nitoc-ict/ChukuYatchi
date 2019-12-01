@@ -1,11 +1,21 @@
 phina.define("KawaraThrowScene", {
   superClass: "DisplayScene",
   init: function () {
-    this.superInit();
+    this.superInit({
+      width: WINDOW_WIDTH,
+      height: WINDOW_HEIGHT,
+    });
     this.backgroundColor = '#e3f7fe';
 
     this.shuriCastle = ShuriCastle().addChildTo(this);
     this.kawara = Kawara().addChildTo(this);
+
+    this.iconBack = Sprite('iconBack').addChildTo(this);
+
+    this.iconBack.x = this.gridX.span(3);
+    this.iconBack.y = this.gridY.span(15);
+    this.iconBack.setInteractive(true);
+
 
     var endButton = Button({
       x: 320,             // x座標
@@ -51,6 +61,7 @@ phina.define("KawaraThrowScene", {
 
 
     this.game_state = GameState(tileNum, putTileNum, ar.slice());
+
     this.roof = DisplayElement().addChildTo(this);
     (MAX_ROOF_HEIGHT * MAX_ROOF_WIDTH).times(function (i) {
       let x = i % MAX_ROOF_WIDTH;
@@ -62,10 +73,11 @@ phina.define("KawaraThrowScene", {
         tile.hit();
       }
     }, this);
-    this.label = Label('手持ち: ' + this.game_state.kawara_num + 'コ\n' + 'おいた瓦: ' + this.game_state.put_tile_num + 'コ').addChildTo(this);
-    this.label.x = 440;
-    this.label.y = 700;
-    this.label.fontSize = 32;
+
+    this.kawaraLabel1 = Label().addChildTo(this);
+    this.kawaraLabel1.x = this.gridX.span(13);
+    this.kawaraLabel1.y = this.gridY.span(15);
+    this.kawaraLabel1.fontSize = 32;
 
 
     var own = this;
@@ -79,11 +91,22 @@ phina.define("KawaraThrowScene", {
 
     };
 
+    this.iconBack.onpointstart = function() {
+      let ar = [];
+      for (let i = 0; i < MAX_ROOF_WIDTH * MAX_ROOF_HEIGHT; ++i) {
+        ar.push(own.roof.children[i].hitted);
+      }
+      own.game_state.saveLocalStorage(ar);
+
+      own.exit('main');
+    }
+
   },
   // 更新
   update: function (app) {
     if (this.kawara.y <= 0 || this.kawara.y >= 970) {
       this.kawara.hit();
+      this.game_state.kawara_num--;
     }
     this.kawara.rotation += 20;
     this.checkHit();
@@ -93,11 +116,19 @@ phina.define("KawaraThrowScene", {
     var gravity = accel.gravity;
     var ori = accel.orientation;
     var rotate = accel.rotation;
-    this.label.text = '手持ち: ' + this.game_state.kawara_num + 'コ\n' + 'おいた瓦: ' + this.game_state.put_tile_num + 'コ';
+    this.kawaraLabel1.text = 'のこり ' + this.game_state.kawara_num + ' コ';
     if (!this.kawara.throwed && this.kawara.isThrow(ac.y)) {
       this.kawara.physical.force(0, ac.y);
-      this.game_state.kawara_num--;
       this.kawara.throwed = true;
+    }
+
+    if (this.game_state.kawara_num <= 0) {
+      let ar = [];
+      for (let i = 0; i < MAX_ROOF_WIDTH * MAX_ROOF_HEIGHT; ++i) {
+        ar.push(this.roof.children[i].hitted);
+      }
+      this.game_state.saveLocalStorage(ar);
+      this.exit('main');
     }
 
     window.addEventListener('deviceorientation', (dat) => {
@@ -135,6 +166,7 @@ phina.define("KawaraThrowScene", {
         tile.hitted = true;
         tile.hit();
         kawara.hit();
+        game_state.kawara_num--;
         game_state.put_tile_num++;
       }
     });
@@ -198,7 +230,7 @@ phina.define('GameState', {
   },
 
   saveLocalStorage: function(put_kawara_ar) {
-    localStorage.setItem('tile_number', this.kawara_num);
+    localStorage.setItem('made_tile_number', this.kawara_num);
     localStorage.setItem('put_tile_number', this.put_tile_num);
     localStorage.setItem('put_kawara', JSON.stringify(put_kawara_ar));
   }
