@@ -106,6 +106,7 @@ phina.define("KawaraThrowScene", {
   update: function (app) {
     if (this.kawara.y <= 0 || this.kawara.y >= 970) {
       this.kawara.hit();
+      this.game_state.kawara_num--;
     }
     this.kawara.rotation += 20;
     this.checkHit();
@@ -118,11 +119,15 @@ phina.define("KawaraThrowScene", {
     this.kawaraLabel1.text = 'のこり ' + this.game_state.kawara_num + ' コ';
     if (!this.kawara.throwed && this.kawara.isThrow(ac.y)) {
       this.kawara.physical.force(0, ac.y);
-      this.game_state.kawara_num--;
       this.kawara.throwed = true;
     }
 
     if (this.game_state.kawara_num <= 0) {
+      let ar = [];
+      for (let i = 0; i < MAX_ROOF_WIDTH * MAX_ROOF_HEIGHT; ++i) {
+        ar.push(this.roof.children[i].hitted);
+      }
+      this.game_state.saveLocalStorage(ar);
       this.exit('main');
     }
 
@@ -161,6 +166,7 @@ phina.define("KawaraThrowScene", {
         tile.hitted = true;
         tile.hit();
         kawara.hit();
+        game_state.kawara_num--;
         game_state.put_tile_num++;
       }
     });
@@ -224,7 +230,7 @@ phina.define('GameState', {
   },
 
   saveLocalStorage: function(put_kawara_ar) {
-    localStorage.setItem('makde_tile_number', this.kawara_num);
+    localStorage.setItem('made_tile_number', this.kawara_num);
     localStorage.setItem('put_tile_number', this.put_tile_num);
     localStorage.setItem('put_kawara', JSON.stringify(put_kawara_ar));
   }
