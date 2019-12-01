@@ -6,6 +6,8 @@ phina.define('MainScene', {
       width: WINDOW_WIDTH,
       height: WINDOW_HEIGHT,
     });
+    // BGM
+    SoundManager.playMusic('bgm');
     // 画像
     this.backgroundImage = Sprite('homeBackground', WINDOW_WIDTH, WINDOW_HEIGHT).addChildTo(this);
     this.iconOshigoto = Sprite('iconOshigoto').addChildTo(this);
@@ -14,7 +16,6 @@ phina.define('MainScene', {
     this.iconKawaraYaki = Sprite('iconKawaraYaki').addChildTo(this);
     this.iconKawaraNage = Sprite('iconKawaraNage').addChildTo(this);
     this.chukuYatchiBaby = Sprite('chukuYatchiBaby1', 200, 200).addChildTo(this);
-    
     // 画像の配置
     // 背景
     this.backgroundImage.x = this.gridX.center();
