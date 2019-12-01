@@ -69,12 +69,38 @@ phina.define('MainScene', {
     },3000,"default")
     .setLoop(true);
 
-    var cnt = 0;
-    var label = Label({x:320,y:600,fill:'black',text:cnt}).addChildTo(this);
-    // タッチイベント登録
-    // おしごとアイコン
+    // おしごとアイコンをタップしたときの処理
+    var own = this;
     this.iconOshigoto.onpointstart = function() {
-      label.text = cnt++;
+      own.exit('oshigotoMenu');
+    };
+  },
+});
+
+// おしごとメニュー
+phina.define("OshigotoMenu", {
+  superClass: 'CanvasScene',
+  
+  init: function() {
+    this.superInit({
+      width: WIDTH,
+      height: HEIGHT,
+    });
+
+    this.backgroundImage = Sprite('backgroundImage', WIDTH, HEIGHT).addChildTo(this);
+    this.backgroundImage.x = this.gridX.center();
+    this.backgroundImage.y = this.gridY.center();
+
+    // ラベル
+    Label({
+      text: 'Oshigoto',
+      fontSize: 48,
+      fill: 'white',
+    }).addChildTo(this).setPosition(this.gridX.center(), this.gridY.center());
+
+    var own = this;
+    this.onpointstart = function() {
+      own.exit('main');
     };
   },
 });
@@ -82,6 +108,18 @@ phina.define('MainScene', {
 phina.main(function() {
   var app = GameApp({
     startLabel: 'main',
+    scenes: [
+      {
+        className: 'MainScene',
+        label: 'main',
+        nextLabel: '',
+      },
+      {
+        className: "OshigotoMenu",
+        label: 'oshigotoMenu',
+        nextLabel: '',
+      },
+    ],
     assets: ASSETS,
     height: HEIGHT,
     width: WIDTH,
