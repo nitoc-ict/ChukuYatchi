@@ -89,8 +89,8 @@ beginDetect();  // load時からvolumeを取る
     // もどるアイコンをタップしたときの処理
     var own = this;
     this.back.onpointstart = function() {
-      madeTiles = parseInt(localStorage.getItem("made_tile_number"));
-      localStorage.setItem("made_tile_number", madeTiles + gameScore / 10);
+      const madeTiles = parseInt(localStorage.getItem("made_tile_number"));
+      localStorage.setItem("made_tile_number", madeTiles + Math.floor(gameScore / 10));
       own.exit('main');
     };
   },

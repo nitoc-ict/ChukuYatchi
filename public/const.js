@@ -37,6 +37,9 @@ const ASSETS = {
     // back: 'https://drive.google.com/uc?id=1NKrSV77pmY_y-orZjL9IrgYp58W4NdvA',
     back: 'https://drive.google.com/uc?id=1COGnSEmC4TukHDkyDEg_iekCB4NSaJ3a'
   },
+    sound: {
+    'bgm': './bgm.mp3',
+  },
 };
 const LEVEL_CHUKUYATCHI = [
   "chukuYatchiBaby",
