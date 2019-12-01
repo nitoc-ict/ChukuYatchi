@@ -97,6 +97,8 @@ phina.define("KawaraThrowScene", {
         ar.push(own.roof.children[i].hitted);
       }
       own.game_state.saveLocalStorage(ar);
+      let evolvedForm = parseInt(localStorage.getItem("evolvedForm"));
+      evolvedForm = evolvedForm >= 3 ? 3 : evolvedForm + 1;
 
       own.exit('main');
     }

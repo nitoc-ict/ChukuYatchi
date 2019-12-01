@@ -89,12 +89,23 @@ beginDetect();  // load時からvolumeを取る
     // もどるアイコンをタップしたときの処理
     var own = this;
     this.back.onpointstart = function() {
+      var evolvedForm = parseInt(localStorage.getItem("evolvedForm"));
+      evolvedForm = evolvedForm >= 3 ? 3 : evolvedForm + 1;
+      localStorage.setItem("evolvedForm", evolvedForm);
       const madeTiles = parseInt(localStorage.getItem("made_tile_number"));
       localStorage.setItem("made_tile_number", madeTiles + Math.floor(gameScore / 10));
+      gameScore = 0;
       own.exit('main');
     };
+
+    this.label = Label().addChildTo(this);
+    this.label.fill = 'white';
+    this.label.setPosition(this.gridX.span(2), this.gridY.span(2));
   },
   update: function() {
+    if (this.label.text != Math.floor(gameScore / 10)) {
+      this.label.text = Math.floor(gameScore / 10);
+    }
     // うちわの切り替え
     switchChar = !switchChar
     if (switchChar) {
