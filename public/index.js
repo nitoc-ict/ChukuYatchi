@@ -45,6 +45,7 @@ phina.define("KawaraThrowScene", {
 
     var ar = [];
     var tileNum = 0;
+    var putTileNum = 0;
 
     if (localStorage.getItem('put_kawara') === null) {
       ar.length = MAX_ROOF_WIDTH * MAX_ROOF_HEIGHT;
@@ -56,13 +57,20 @@ phina.define("KawaraThrowScene", {
       console.log(ar);
     }
 
-    if (localStorage.getItem('tile_number') === null) {
-      tileNum = 10;
+    if (localStorage.getItem('made_tile_number') === null) {
+      tileNum = 0;
     } else {
-      tileNum = localStorage.getItem('tile_number');
+      tileNum = localStorage.getItem('made_tile_number');
     }
 
-    this.game_state = GameState(tileNum, ar.slice());
+    if (localStorage.getItem('put_tile_number') === null) {
+      putTileNum = 0;
+    } else {
+      putTileNum = localStorage.getItem('put_tile_number');
+    }
+
+
+    this.game_state = GameState(tileNum, putTileNum, ar.slice());
     this.roof = DisplayElement().addChildTo(this);
     (MAX_ROOF_HEIGHT * MAX_ROOF_WIDTH).times(function (i) {
       let x = i % MAX_ROOF_WIDTH;
@@ -74,10 +82,10 @@ phina.define("KawaraThrowScene", {
         tile.hit();
       }
     }, this);
-    this.label = Label('のこり\n' + this.game_state.kawara_num + 'コ').addChildTo(this);
-    this.label.x = 540;
+    this.label = Label('手持ち: ' + this.game_state.kawara_num + 'コ\n' + 'おいた瓦: ' + this.game_state.put_tile_num + 'コ').addChildTo(this);
+    this.label.x = 440;
     this.label.y = 700;
-    this.label.fontSize = 42;
+    this.label.fontSize = 32;
 
 
     var own = this;
@@ -105,7 +113,7 @@ phina.define("KawaraThrowScene", {
     var gravity = accel.gravity;
     var ori = accel.orientation;
     var rotate = accel.rotation;
-    this.label.text = 'のこり\n' + this.game_state.kawara_num + 'コ';
+    this.label.text = '手持ち: ' + this.game_state.kawara_num + 'コ\n' + 'おいた瓦: ' + this.game_state.put_tile_num + 'コ';
     if (!this.kawara.throwed && this.kawara.isThrow(ac.y)) {
       this.kawara.physical.force(0, ac.y);
       this.game_state.kawara_num--;
@@ -139,6 +147,7 @@ phina.define("KawaraThrowScene", {
   checkHit: function () {
     var kawara = this.kawara;
     var gridX = this.gridX;
+    var game_state = this.game_state;
     this.roof.children.each(function (tile) {
       if (!tile.hitted && tile.hitTestElement(kawara)) {
         tile.fill = 'red';
@@ -146,6 +155,7 @@ phina.define("KawaraThrowScene", {
         tile.hitted = true;
         tile.hit();
         kawara.hit();
+        game_state.put_tile_num++;
       }
     });
   },
@@ -200,14 +210,16 @@ phina.define('Kawara', {
 });
 
 phina.define('GameState', {
-  init: function(kawara_num, put_kawara) {
+  init: function(kawara_num, put_tile_number, put_kawara) {
     this.kawara_num = kawara_num;
+    this.put_tile_num = put_tile_number;
     this.put_kawara = put_kawara;
     this.hit_kawara_num = 0;
   },
 
   saveLocalStorage: function(put_kawara_ar) {
     localStorage.setItem('tile_number', this.kawara_num);
+    localStorage.setItem('put_tile_number', this.put_tile_num);
     localStorage.setItem('put_kawara', JSON.stringify(put_kawara_ar));
   }
 });
