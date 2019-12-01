@@ -38,7 +38,7 @@ phina.main(function() {
   // アプリケーションを生成
   var firstScene = "main";
   var initialBoot = localStorage.getItem("initialBoot");
-  console.log("initialBoot: " + initialBoot);
+
   if (typeof initialBoot === "undefined" || initialBoot === null) {
     localStorage.setItem("initialBoot", "false");
     localStorage.setItem("made_tile_number", "0");
@@ -48,9 +48,9 @@ phina.main(function() {
     localStorage.setItem("genaration", "1");
     localStorage.setItem("syuri_level", "1");
     localStorage.setItem("startDate", new Date().toString());
-    // put_kawaraもセットする
-    // firstScene = "born";
+    localStorage.setItem("put_kawara", "[]");
   }
+
   var app = GameApp({
     startLabel: firstScene,   // MainScene から開始
     width: WINDOW_WIDTH,  // 画面幅
@@ -78,10 +78,6 @@ phina.main(function() {
         label: 'toSeeSyuriSud',
       },
       {
-        className: 'BornScene',
-        label: 'born',
-      },
-      {
         className: 'KawaraThrowScene',
         label: 'kawaraThrow',
       },
@@ -91,7 +87,6 @@ phina.main(function() {
       },
     ]
   });
-  app.enableStats();
   // 実行
   app.run();
 });
