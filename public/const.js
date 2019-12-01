@@ -42,8 +42,8 @@ const ASSETS = {
     iconGeneration2: 'https://drive.google.com/uc?id=1WBJyortEuGrN1wr-4RYIzr0AJ_sh7uqg',
     iconGeneration3: 'https://drive.google.com/uc?id=1hZRDYWMZfTemvNqzb1rxPQYo42u-XtW1',
     generationText: 'https://drive.google.com/uc?id=1OQ3adErPc8sfWtR4d471s-bZZo-5X5mH',
+    shokuninLv: 'https://drive.google.com/uc?id=1dryoySe4FfifZNaGk9z0nDm8tz0_TN0_',
     kawaraNumber: 'https://drive.google.com/uc?id=1cRmFhHia1lDB05BSytbHLl8kl2cBJPqk',
-    shokuninLv: 'https://drive.google.com/uc?id=1cRmFhHia1lDB05BSytbHLl8kl2cBJPqk',
   },
     sound: {
     'bgm': './bgm.mp3',
