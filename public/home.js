@@ -11,8 +11,6 @@ phina.define('MainScene', {
     this.iconOshigoto = Sprite('iconOshigoto').addChildTo(this);
     this.iconMitsukeru = Sprite('iconMitsukeru').addChildTo(this);
     this.iconBokin = Sprite('iconBokin').addChildTo(this);
-    this.iconKawaraYaki = Sprite('iconKawaraYaki').addChildTo(this);
-    this.iconKawaraNage = Sprite('iconKawaraNage').addChildTo(this);
     this.chukuYatchiBaby = Sprite('chukuYatchiBaby1', 200, 200).addChildTo(this);
     
     // 画像の配置
