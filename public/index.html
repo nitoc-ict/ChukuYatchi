@@ -19,7 +19,9 @@
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
+    <!--script src="./animations.js"></script -->
 
+    <!--
     <script>
     phina.globalize();
 // 定数
@@ -91,16 +93,54 @@ phina.define("MainScene", {
   //   }
   // }
 });
+-->
+
+  <script>
+    phina.globalize();
+  </script>
+  <script src="./animations.js"></script>
+  <script>
 /*
  * メイン処理
  */
 phina.main(function() {
   // アプリケーションを生成
+  var firstScene = "toSeeSyuriHappy";
+  // var initialBoot = localStorage.getItem("initialBoot");
+  // if (typeof initialBoot === "undefined" || initialBoot === null) {
+  //   localStorage.setItem("initialBoot", "false");
+  //   localStorage.setItem("made_tile_number", "0");
+  //   localStorage.setItem("put_tile_number", "0");
+  //   localStorage.setItem("level", "1");
+  //   localStorage.setItem("evolvedForm", "1");
+  //   localStorage.setItem("genaration", "1");
+  //   localStorage.setItem("startDate", new Date().toString());
+  //   // put_kawaraもセットする
+  //   // firstScene = "born";
+  // }
   var app = GameApp({
-    startLabel: 'main',   // MainScene から開始
-  //   width: SCREEN_WIDTH,  // 画面幅
-  //   height: SCREEN_HEIGHT,// 画面高さ
+    startLabel: firstScene,   // MainScene から開始
+    width: WINDOW_WIDTH,  // 画面幅
+    height: WINDOW_HEIGHT,// 画面高さ
     assets: ASSETS,       // アセット読み込み
+    scenes: [
+      {
+        className: 'ToSeeSyuriSosoScene',
+        label: 'toSeeSyuriSoso',
+      },
+      {
+        className: 'ToSeeSyuriHappyScene',
+        label: 'toSeeSyuriHappy',
+      },
+      {
+        className: 'ToSeeSyuriSudScene',
+        label: 'toSeeSyuriSud',
+      },
+      {
+        className: 'BornScene',
+        label: 'born',
+      },
+    ]
   });
   app.enableStats();
   // 実行
