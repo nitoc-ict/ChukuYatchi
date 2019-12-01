@@ -1,6 +1,12 @@
 // 定数
 const ASSETS = {
   image: {
+    homeBackground: 'https://drive.google.com/uc?id=1BmVfkIdbyOUWTfu5m_DR9Frh8KfHmFi8',
+    iconMitsukeru: 'https://drive.google.com/uc?id=1c1FyBvCqQSAj6ag1NeP6DELeJoLWdyJl',
+    iconOshigoto: 'https://drive.google.com/uc?id=1HqUEa06w89dhDEmX4jhGy4rJuV8A8r5k',
+    iconBokin: 'https://drive.google.com/uc?id=1JKyjQRFaJGUq92kmw8DIo_OHk8mNdQbu',
+    iconKawaraYaki: 'https://drive.google.com/uc?id=1K0gxoUSnSz1Bb4CJ_G7C9UKgkupiaPjX',
+    iconKawaraNage: 'https://drive.google.com/uc?id=1bBIfEofx8E-bZLSE96DBwITnDru6NTWg',
     chukuYatchiBabyHappy: 'https://drive.google.com/uc?id=1PKX2_oJxnDx6IZdsJ3tSgDoncdicr-nI',
     chukuYatchiBabySud: 'https://drive.google.com/uc?id=1kQPj7UVaocmbOEu-jBvxvVO3LCvuyJ12',
     chukuYatchiBaby1: 'https://drive.google.com/uc?id=1FGw5Q7ISopjn6KcGOtkSY29e69OMb866',
@@ -34,3 +40,13 @@ const V_SPLIT_N = 4;
 const H_SPLIT_N = 5;
 const BUTTON_DISTANCE = 150;
 
+var MAX_ROOF_WIDTH = 8;
+var MAX_ROOF_HEIGHT = 3;
+var TILE_WIDTH = 80;
+var TILE_HEIGHT = 50;
+var TILE_MARGIN_X = 0.1;
+var TILE_MARGIN_Y = 0.5;
+var KAWARA_INIT_Y = 900;
+var KAWARA_INIT_X = 325;
+var SHURI_INIT_Y = 315;
+var SHURI_INIT_X = 212;
