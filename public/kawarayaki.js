@@ -89,12 +89,11 @@ beginDetect();  // load時からvolumeを取る
     // もどるアイコンをタップしたときの処理
     var own = this;
     this.back.onpointstart = function() {
-      madeTiles = parseInt(localStorage.getItem("made_tile_number"));
-      console.log(evolvedForm)
       var evolvedForm = parseInt(localStorage.getItem("evolvedForm"));
       evolvedForm = evolvedForm >= 3 ? 3 : evolvedForm + 1;
-      localStorage.setItem("made_tile_number", madeTiles + gameScore / 10);
       localStorage.setItem("evolvedForm", evolvedForm);
+      const madeTiles = parseInt(localStorage.getItem("made_tile_number"));
+      localStorage.setItem("made_tile_number", madeTiles + Math.floor(gameScore / 10));
       own.exit('main');
     };
   },
