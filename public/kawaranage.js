@@ -17,22 +17,6 @@ phina.define("KawaraThrowScene", {
     this.iconBack.setInteractive(true);
 
 
-    var endButton = Button({
-      x: 320,             // x座標
-      y: 780,             // y座標
-      width: 80,         // 横サイズ
-      height: 30,        // 縦サイズ
-      text: "owari",     // 表示文字
-      fontSize: 32,       // 文字サイズ
-      fontColor: 'white', // 文字色
-      cornerRadius: 10,   // 角丸み
-      fill: 'skyblue',    // ボタン色
-      stroke: 'blue',     // 枠色
-      strokeWidth: 5,     // 枠太さ
-                          // 他にも指定できる…？
-    }).addChildTo(this);
-
-
     var ar = [];
     var tileNum = 0;
     var putTileNum = 0;
@@ -81,16 +65,6 @@ phina.define("KawaraThrowScene", {
 
 
     var own = this;
-    endButton.onpointend = function() {
-      // 状態の保存
-      let ar = [];
-      for (let i = 0; i < MAX_ROOF_WIDTH * MAX_ROOF_HEIGHT; ++i) {
-        ar.push(own.roof.children[i].hitted);
-      }
-      own.game_state.saveLocalStorage(ar);
-
-    };
-
     this.iconBack.onpointstart = function() {
       let ar = [];
       for (let i = 0; i < MAX_ROOF_WIDTH * MAX_ROOF_HEIGHT; ++i) {
