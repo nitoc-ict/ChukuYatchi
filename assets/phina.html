@@ -87,19 +87,22 @@ phina.define("OshigotoMenu", {
       height: HEIGHT,
     });
 
-    this.backgroundImage = Sprite('backgroundImage', WIDTH, HEIGHT).addChildTo(this);
-    this.backgroundImage.x = this.gridX.center();
-    this.backgroundImage.y = this.gridY.center();
+    // 画像配置
+    this.backgroundImage = Sprite('backgroundImage', WIDTH, HEIGHT).setPosition(this.gridX.center(), this.gridY.center()).addChildTo(this);
+    this.iconKawaraYaki = Sprite('iconMitsukeru').setPosition(this.gridX.span(5), this.gridY.center()).addChildTo(this);
+    this.iconKawaraNage = Sprite('iconBokin').setPosition(this.gridX.span(11), this.gridY.center()).addChildTo(this);
 
-    // ラベル
-    Label({
-      text: 'Oshigoto',
-      fontSize: 48,
-      fill: 'white',
-    }).addChildTo(this).setPosition(this.gridX.center(), this.gridY.center());
+    // タッチを有効にする
+    this.iconKawaraYaki.setInteractive(true);
+    this.iconKawaraNage.setInteractive(true);
 
     var own = this;
-    this.onpointstart = function() {
+    // 瓦焼きアイコンをタップしたときの処理
+    this.iconKawaraYaki.onpointstart = function() {
+      own.exit('main');
+    };
+    // 瓦投げアイコンをタップしたときの処理
+    this.iconKawaraNage.onpointstart = function() {
       own.exit('main');
     };
   },
