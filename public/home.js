@@ -34,6 +34,7 @@ phina.define('MainScene', {
       fontsize: 7,
       fill: "#7a280f",
     }).addChildTo(this).setPosition(320, 110);
+
     // 瓦の数
     this.kawaraNumber.setPosition(450, 110);
     var kawaraNumberLabel = Label({
