@@ -2,7 +2,7 @@ phina.define("ToSeeSyuriSosoScene", {
   superClass: 'CanvasScene',
   init: function(options) {
     this.superInit(options);
-    var nextScene = "toSeeSyuriHappy"
+    var nextScene = "main"
     var generation = localStorage.getItem("generation");
     generation = (typeof generation === "undefined" || generation === null) ? 1 : generation;
     var chukuYatchiPictName = LEVEL_CHUKUYATCHI[generation] + "Sud";
@@ -70,7 +70,7 @@ phina.define("ToSeeSyuriHappyScene", {
   superClass: 'CanvasScene',
   init: function(options) {
     this.superInit(options);
-    var nextScene = "toSeeSyuriSud"
+    var nextScene = "main"
     var generation = localStorage.getItem("generation");
     generation = (typeof generation === "undefined" || generation === null) ? 1 : generation;
     var chukuYatchiPictName = LEVEL_CHUKUYATCHI[generation] + "Sud";
@@ -137,7 +137,7 @@ phina.define("ToSeeSyuriSudScene", {
   superClass: 'CanvasScene',
   init: function(options) {
     this.superInit(options);
-    var nextScene = "toSeeSyuriSoso"
+    var nextScene = "main"
     var generation = localStorage.getItem("generation");
     generation = (typeof generation === "undefined" || generation === null) ? 1 : generation;
     var chukuYatchiPictName = LEVEL_CHUKUYATCHI[generation] + "Sud";
